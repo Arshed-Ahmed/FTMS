@@ -47,10 +47,10 @@
                             </li>
                           </ul>
                         </li> -->
-                        <!-- <li><a href="hirepricelist.php">Price List</a>
+                        <li><a href="payrate.php">Pay rates</a>
                         </li>
-                        <li><a href="measurmentconfig.php">Measurement</a>
-                        </li> -->
+                        <li><a href="payroll.php">Salary/ Wage</a>
+                        </li>
                         <li><a href="itemconfig.php">Item Catergory</a>
                         </li>
                         <li><a href="styleconfig.php">Style</a>
@@ -114,7 +114,7 @@
                   <li><a><i class="fa fa-briefcase"></i> Work Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="createjobcard.php">Create Jobcard</a></li>
-                      <li><a href="unassignjobcard.php">Edit Jobcard</a></li>
+                      <li><a href="editjobcard.php">Edit Jobcard</a></li>
                       <!-- <li><a href="resources.php">Resources</a></li>
                       <li><a href="jobcarddetails.php">Jobcard details</a></li> -->
                     </ul>
@@ -158,6 +158,9 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
+
+                <li class=""><a href="../controllers/logout.php"><i class="fa fa-sign-out pull-right"></i></a></li>
+
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="../production/images/your-picture.png" alt="">Admin

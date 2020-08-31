@@ -57,7 +57,7 @@
 										<td>Rs. 100</td>
 										<td>
 											<a href="#" class="btn btn-info btn-xs" onclick=""><i class="fa fa-pencil" data-toggle="modal" data-target=".bs-example-modal-lg"></i> Edit </a>
-		                					<a href="#" class="btn btn-danger btn-xs" onclick=""><i class="fa fa-trash-o"></i> Delete </a>
+											<a href="#" class="btn btn-danger btn-xs" onclick=""><i class="fa fa-trash-o"></i> Delete </a>
 										</td>
 								    </tr>
 								</tbody>

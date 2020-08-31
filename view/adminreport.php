@@ -6,30 +6,14 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Report Tables <small> press report button</small></h2>
+            <h2>Select report type</h2>
             
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-          	<button type="button" class="btn btn-primary" onclick="loadEmployeeData();">Employee report</button>
+          	<button type="button" class="btn btn-primary">Employee report</button>
+            <a type="button" class="btn btn-primary" href="../report/employeereport.php">Report</a>
 
-
-
-          	<table id="dataTable-buttons" class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID No</th>
-                  <th>Employee Name</th>
-                  <th>NIC</th>
-                  <th>Telephone</th>
-                  <th>Email</th>
-                  <th>Address</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-              </tbody>
-            </table>
 
             <form method="POST">
             	<input type="submit" name="createpdf" class="btn btn-success" value="Create Report">
