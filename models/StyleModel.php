@@ -10,18 +10,13 @@ class StyleModel
       $this->db_handle = new Connection();
     }
 
-    // add Customer info to tbl
-    function addStyle($iname,$image,$desc) {
-        $query = "INSERT INTO $this->table (stlname , stlstyle, stldesc) VALUES ( ?, ?, ? )";
-        $paramType = "iss";
+    function deleteStyle($id) {
+        $query = "UPDATE $this->table SET Display = '1' WHERE stlid = ?";
+        $paramType = "i";
         $paramValue = array(
-            $iname,
-            $image,
-            $desc
+            $id
         );
-
-        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
-        return $iname;
+        $this->db_handle->update($query, $paramType, $paramValue);
     }
 
 }

@@ -32,56 +32,84 @@
           <table id="datatable-buttons" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>Order Id</th>
+                <th>Customer Name</th>
+                <th>Order Type</th>
+                <th>Measurements</th>
+                <th>Due Date</th>
               </tr>
             </thead>
 
-
             <tbody>
               <tr>
+                <td>001</td>
                 <td>Tiger Nixon</td>
-                <td>Tailor</td>
-                <td>Kandy</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$32000</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
               </tr>
               <tr>
-                <td>Garrett Winters</td>
-                <td>Tailor</td>
-                <td>Katugastota</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$17000</td>
+                <td>002</td>
+                <td>Garrett Winter</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
               </tr>
               <tr>
+                <td>003</td>
                 <td>Ashton Cox</td>
-                <td>Cutter
-                <td>pilimathalawa</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$50,000</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
               </tr>
               <tr>
-                <td>Cedric Kelly</td>
-                <td>Designer</td>
-                <td>Kandy</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$43,000</td>
-              </tr>
-              <tr>
+                <td>004</td>
                 <td>Airi Satou</td>
-                <td>Tailor</td>
-                <td>Kandy</td>
-                <td>33</td>
-                <td>2008/11/28</td>
-                <td>$16000</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
+              </tr>
+              <tr>
+                <td>005</td>
+                <td>Cedric Kelly</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
+              </tr>
+              <tr>
+                <td>006</td>
+                <td>Willioms</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
+              </tr>
+              <tr>
+                <td>007</td>
+                <td>Chandler Bing</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
+              </tr>
+              <tr>
+                <td>008</td>
+                <td>Monica Geller</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
+              </tr>
+              <tr>
+                <td>009</td>
+                <td>Joey Tribiyani</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
+              </tr>
+              <tr>
+                <td>010</td>
+                <td>Rachel Green</td>
+                <td>Tailor made</td>
+                <td>12,34,24,18,5,7,28</td>
+                <td>01/15/2021</td>
               </tr>
             </tbody>
           </table>

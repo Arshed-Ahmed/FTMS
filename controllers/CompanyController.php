@@ -9,50 +9,89 @@ $db_handle = new Connection();
 class CompanyController
 {	
 
-	function addCompany()
-	{
+	// function addCompany(){
+ //    $name = $_POST['name'];
+ //    $add = $_POST['add'];
+ //    $city = $_POST['city'];
+ //    $regno= $_POST['regno'];
+ //    $logo='';
+ //    $tel= $_POST['tel'];
+ //    $email = $_POST['email'];
+ //    $web = $_POST['web'];
 
-        /* Getting file name */
-        $filename = $_FILES['file']['name'];
+	// 	$model = new CompanyModel();
+	// 	$insertId = $model->addCompany($name,$add,$city,$regno,$logo,$tel,$email,$web);
 
-        /* Location */
-        $location = "style/".$filename;
-        $uploadOk = 1;
-        $imageFileType = pathinfo($location,PATHINFO_EXTENSION);
+	// 	echo json_encode($insertId);
+	// }
 
-        /* Valid Extensions */
-        $valid_extensions = array("jpg","jpeg","png");
-        /* Check file extension */
-        if( !in_array(strtolower($imageFileType),$valid_extensions) ) {
-           $uploadOk = 0;
-        }
+  function addLogo(){
+    /* Getting file name */
+    if(isset($_FILES['file']['name'])){
 
-        if($uploadOk == 0){
-           echo 0;
-        }else{
-           /* Upload file */
-           if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
-              echo $location;
-           }else{
-              echo 0;
-           }
-        }
+      $name = $_FILES['file']['name'];
+      $target_dir = "logo/";
+      $location = $target_dir.$name;
+      $target_file = $target_dir . basename($_FILES["file"]["name"]);
 
+      // Select file type
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-		$name = $_POST['name'];
-        $add = $_POST['add'];
-        $city = $_POST['city'];
-        $regno= $_POST['regno'];
-        $location= $_POST['location'];
-        $tel = $_POST['tel'];
-        $email = $_POST['email'];
-        $web = $_POST['web'];
-		$model = new CompanyModel();
-		$insertId = $model->addCompany($name,$add,$city,$regno,$location,$tel,$email,$web);
+      // Valid file extensions
+      $extensions_arr = array("jpg","jpeg","png","gif");
 
-		echo json_encode($insertId);
-	}
+      // Check extension
+      if( in_array($imageFileType,$extensions_arr) ){
+     
+         // Upload file
+         move_uploaded_file($_FILES['file']['tmp_name'],$location);
 
+         // return record
+         echo $location;
+         return $location;
+      }
+    }
+    $model = new CompanyModel();
+    $insertId = $model->addLogo($location);
+    echo json_encode($insertId);
+  }
+
+  function getCompany(){
+    $id = $_POST['id'];
+    $model = new CompanyModel();
+    $result = $model->getCompanyById($id);
+    echo json_encode($result);
+  }
+
+  function getAllCompany(){
+    $model = new CompanyModel();
+    $result = $model->getAllCompany();
+    echo json_encode($result);
+  }
+
+  function editCompany(){
+    $id =$_POST['id'];
+    $name = $_POST['name'];
+    $add = $_POST['add'];
+    $city = $_POST['city'];
+    $regno= $_POST['regno'];
+    $tel= $_POST['tel'];
+    $email = $_POST['email'];
+    $web = $_POST['web'];
+    $budget = $_POST['budget'];
+    $emp = $_POST['emp'];
+    $orders = $_POST['orders'];
+
+    $model = new CompanyModel();
+    $insertId = $model->editCompany($name,$add,$city,$regno,$tel,$email,$web,$budget,$emp,$orders,$id);
+    echo json_encode($insertId);
+  }
+
+  function deleteCompany(){
+    $id = $_POST["id"];
+    $Model = new CompanyModel();
+    $Model->deleteCompany($id);
+  }
 }
 
 ?>

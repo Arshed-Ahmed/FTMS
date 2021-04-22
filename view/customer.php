@@ -65,8 +65,8 @@
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-3">
-                  <button id="btnrest" type="reset" class="btn btn-primary" onclick="Reload();">Reset</button>
-                  <button id="submit" class="btn btn-success" onclick="addCustomer();">Save</button>
+                  <button id="btnreset" type="reset" class="btn btn-primary" onclick="Reload();">Reset</button>
+                  <button id="submit"  class="btn btn-success" onclick="addCustomer();">Save</button>
                   <button id="update" style="display: none;" class="btn btn-success" onclick="updateCustomer();">Update</button>
                 </div>
               </div>
@@ -103,8 +103,8 @@
         $('#title').text('Customer');
         $('#breadcrumb').text('Customer');
         loadCustomerData();
-
-    });
+  });
+  
 
   //Load Customer data function  
   function loadCustomerData() {
@@ -152,7 +152,6 @@
   }
 
   function addCustomer(){
-
     var check = $('form')[0].checkValidity();
     if(check == true){
       var fname =$("#txtfname").val();
@@ -180,8 +179,6 @@
           
           loadCustomerData();
           clearData();
-
-
         },  
         error: function (errormessage) {  
           alert(errormessage.responseText);

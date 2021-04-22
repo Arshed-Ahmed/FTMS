@@ -1,24 +1,33 @@
+<style type="text/css">
+  #hideMe {
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
+</style>
+
 <?php include_once("../incl/header.php");?>
-<?php require_once("../models/Connection.php");?>
-<?php 
-	// //if upload button is pressed
-	// if (isset($_POST['upload'])) {
-	// 	//path to store file
-	// 	$target = "style/".basename($_FILE['image']['name']);
 
-	// 	//connect to database
-	// 	require_once("../models/Connection.php");
-
-	// 	//getting submitted data from the form
-	// 	$image = $_FILE['image']['name'];
-	// 	$iname = $_POST['iname'];
-	// 	$desc = $_POST['desc'];
-
-	// 	$sql = "INSERT INTO style (stlname , stlstyle, stldesc) VALUES ('$iname', '$image', '$desc')";
-
-	// }
-
-?>
 <!-- page content -->
 
     <div class="row">
@@ -30,61 +39,64 @@
           </div>
 
           <div class="x_content">
-            <form id="styleform" class="form-horizontal form-label-left"  method="POST" enctype="multipart/form-data">
-                <p>Add a Style</p>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <form action="styleconfig_upload.php" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" novalidate>
                 <div class="item form-group">
-                  <input type="text" id="id" name="id" class="invisible form-control col-md-7 col-xs-12">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="iname">Style Name / Code <span class="required">*</span>
-                  </label>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="my_image">Select Image File:<span class="required">*</span></label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="iname" class="form-control col-md-7 col-xs-12" name="iname" placeholder="Neck" required="required" type="text">
+                    <input type="file" id="my_image" name="my_image" required="required">
+                    <?php if (isset($_GET['error'])): ?>
+                      <p id="hideMe" style="color: red;"><?php echo $_GET['error']; ?></p>
+                    <?php endif ?>
                   </div>
                 </div>
                 <div class="item form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Style Picture <span class="required">*</span>
-                  </label>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Image Description:</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="file" name="image" id="image">  
-                  </div>
-                </div>
-                <div class="item form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="iprice">Style Price <span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="iprice" class="form-control col-md-7 col-xs-12" name="iprice" placeholder="00.00" required="required" type="text">
-                  </div>
-                </div>
-                <div class="item form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="desc">Description <span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <textarea id="desc" required="required" name="desc" class="form-control col-md-7 col-xs-12"></textarea>
+                    <input id="description" type="text" class="form-control col-md-7 col-xs-12" name="description" placeholder="Style Description">
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="col-md-6 col-md-offset-3">
-                    <button id="btnreset" class="btn btn-primary" onclick="clearData()">Reset</button>
-                    <input type="submit" onclick="addStyle()" id="upload" name="upload" class="btn btn-success" value="Add Style">
+                    <input class="btn btn-default" type="reset" name="reset" value="Clear" onclick="Reload();">
+                    <input class="btn btn-primary" type="submit" id="btnsubmit" name="btnsubmit" value="Upload">
                   </div>
                 </div>
-            </form>
+              </form>
+
+            </div><br><br><br><br><br><br>
             <div class="ln_solid"></div>
             
-            <table id="styletable" class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID No</th>
-                  <th>Style Name</th>
-                  <th>Picture</th>
-                  <th>Price</th>
-                  <th>Description</th>
-                  <th>Option</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-              </tbody>
-            </table>
+            
+            <div class="col-md-12 col-sm-12 col-xs-12" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; min-height: 40vh;">
+              <?php 
+                include("db_conn.php");
+                $sql = "SELECT * FROM style WHERE Display = '0' ORDER BY stlid DESC";
+                $res = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($res) > 0) {
+                  while ($images = mysqli_fetch_assoc($res)) {  
+                    $id = $images['stlid'];  ?>
+                    <div style=" width: 280px;
+                                height: 300px;">
+                      <div 
+                        class="alb" 
+                        style=" width: 200px;
+                                height: 200px;
+                                padding: 5px;">
+                        <img src="style/<?=$images['stlname']?>" width="100%" height="100%">
+                      </div>
+                      <div class="col-lg-3">
+
+                        <a href="#" class="btn btn-danger btn-xs" onclick="deleteStyle('<?=$images['stlid']?>');"><i class="fa fa-trash-o"></i> Delete </a>
+                      </div>
+                      <div class="caption col-lg-9">
+                        <p><?php echo $images['stldesc']; ?></p>
+                      </div>
+                    </div>
+                    
+              <?php } }?>
+            </div>
           </div>
 
         </div>
@@ -95,56 +107,50 @@
 <!-- /page content -->
 <?php include_once("../incl/footer.php"); ?>
 
-<?php
-    $image = $_FILE['image']['name'];
- ?>
 <script type="text/javascript">
   $(document).ready(function (){
         $('#title').text('Configuration');
-        $('#breadcrumb').text('Price List');
+        $('#breadcrumb').text('Add Style');
   });
 
-	
-  function addStyle(){
-    var fname =$("#txtfname").val();
-    var image = '<?=$image?>';
-	var iname = $("#iname").val();
-	var desc = $("#desc").val();
-
-    var Data={image:image,iname:iname,desc:desc};
-
-    $.ajax({  
-      url: "../server.php?c=StyleController&m=addStyle",  
-      data: Data,
-      type: "POST",
-      dataType: "json",  
-      success: function (data) {
-        // alert(data+ " Susscessfully added to the system");
-        
-        new PNotify({
-          title: 'New Style',
-          text: data+ " Susscessfully added to the system",
-          type: 'success',
-          styling: 'bootstrap3'
-        });
-        
-        loadStyleData();
-        clearData();
-
-      },  
-      error: function (errormessage) {  
-        alert(errormessage.responseText);
-        alert("Unable to add Customer");
-      }
-    });
-
-    function clearData() {
-	    // $('input[type="text"]').val('');
-	    // $('input[type="password"]').val('');
-	    // $('Select').val('');
-	    $("#submit").css("display","");
-	    $("#update").css("display","none");
-	    $('#styleform')[0].reset();
-  	}  
+	function Reload(){
+    location.reload();
   }
+
+  function deleteStyle(id) {  
+    var ans = confirm("Are you sure you want to delete this Style?");
+
+    if (ans) {  
+      $.ajax({  
+        url: "../server.php?c=StyleController&m=deleteStyle",
+        data: {'id':id},
+        type: "POST",  
+          // dataType: "json",  
+          success: function (data) { 
+          // alert('Deleted');
+          // loadStyleData();
+          new PNotify({
+            title: 'Deleted!',
+            text: 'Style removed.',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+          setTimeout(function() {location.reload()},1500);
+        
+        },  
+        error: function (errormessage) {  
+          alert(errormessage.responseText);  
+        }  
+      });
+    }  
+  }
+
+  function clearData() {
+    // $('input[type="text"]').val('');
+    // $('input[type="password"]').val('');
+    // $('Select').val('');
+    // $("#submit").css("display","");
+    // $("#update").css("display","none");
+    $('#styleform')[0].reset();
+	}  
 </script>

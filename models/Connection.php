@@ -1,16 +1,25 @@
 <?php
+    $host = "localhost";
+    $user = "root";
+    $password = "";
+    $database = "ftms";
+    $con;
+
+
 class Connection {
     private $host = "localhost";
     private $user = "root";
     private $password = "";
     private $database = "ftms";
     private $con;
+
+
     
     function __construct() {
         $this->con = $this->db_con();
     }   
     
-    function db_con() {
+    function db_con(){
         $con = mysqli_connect($this->host,$this->user,$this->password,$this->database);
         return $con;
     }

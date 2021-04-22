@@ -20,14 +20,14 @@ class CustomerModel
             $nic,
             $tel,
             $email,
-            $add
+            $add,
         );
 
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
         return $fname;
     }
 
-    function editCustomer($name,$password,$type,$status,$id) {
+    function editCustomer($fname,$lname,$nic,$tel,$email,$add,$id) {
         $query = "UPDATE $this->table SET cusFname = ?,cusLname = ?,cusNIC = ?,cusPno = ?,cusEmail = ?,cusAddress = ? WHERE cusid = ?";
         $paramType = "sssissi";
         $paramValue = array(
@@ -45,7 +45,7 @@ class CustomerModel
     }
 
     function deleteCustomer($id) {
-        $query = "DELETE FROM $this->table WHERE cusid = ?";
+        $query = "UPDATE $this->table SET Display = '1' WHERE cusid = ?";
         $paramType = "i";
         $paramValue = array(
             $id
@@ -65,7 +65,7 @@ class CustomerModel
     }
 
     function getAllCustomer() {
-        $sql = "SELECT * FROM $this->table ORDER BY cusid";
+        $sql = "SELECT * FROM $this->table WHERE Display = '0' ORDER BY cusid";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }

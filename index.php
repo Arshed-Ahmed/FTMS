@@ -58,7 +58,7 @@
                 <br />
 
                 <div>
-                  <img src="view/images/logo.jpg">
+                  <img src="view/images/logo.png">
                   <p>Copyright © 2020 Fashion Tailors. All rights reserved. Template by <a href="#">Colorlib</a>.</p>
                 </div>
               </div>
@@ -93,7 +93,7 @@
                 <br />
 
                 <div>
-                  <img src="view/images/logo.jpg">
+                  <img src="view/images/logo.png">
                   <p>Copyright © 2020 Fashion Tailors. All rights reserved. Template by <a href="#">Colorlib</a>.</p>
                 </div>
               </div>

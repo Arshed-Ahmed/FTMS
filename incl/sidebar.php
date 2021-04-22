@@ -3,7 +3,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <p class="site_title"><img src="../view/images/logo35crop.jpg"> </p>
+              <p class="site_title"><img src="../view/images/logo35crop.png"> </p>
             </div>
 
             <div class="clearfix"></div>
@@ -151,7 +151,7 @@
 
         <!-- top navigation -->
         <div class="top_nav">
-          <div class="nav_menu">
+          <div class="nav_menu" style="background-image:download.jpg">
             <nav>
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>

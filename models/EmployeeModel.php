@@ -51,7 +51,7 @@ class EmployeeModel
     }
 
     function deleteEmployee($id) {
-        $query = "DELETE FROM $this->table WHERE tid = ?";
+        $query = "UPDATE $this->table SET Display = '1' WHERE tid = ?";
         $paramType = "i";
         $paramValue = array(
             $id
@@ -70,7 +70,7 @@ class EmployeeModel
         return $result;
     }
     function getAllEmployee() {
-        $sql = "SELECT * FROM $this->table ORDER BY tid";
+        $sql = "SELECT * FROM $this->table WHERE Display = '0' ORDER BY tid";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
