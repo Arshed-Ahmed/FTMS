@@ -69,5 +69,11 @@ class CustomerModel
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
+
+    function getAllCustomerDESC() {
+        $sql = "SELECT * FROM $this->table WHERE Display = '0' ORDER BY cusid DESC" ;
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
 }
 ?>

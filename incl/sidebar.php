@@ -159,7 +159,11 @@
 
               <ul class="nav navbar-nav navbar-right">
 
-                <li class=""><a href="../controllers/logout.php"><i class="fa fa-sign-out pull-right"></i></a></li>
+                <li role="presentation" data-toggle="tooltip" data-placement="bottom" title="Logout">
+                  <a href="../controllers/logout.php">
+                    <span class="badge bg-red"><i class="fa fa-sign-out"></i></span>
+                  </a>
+                </li>
 
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

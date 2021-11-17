@@ -116,7 +116,8 @@
 		                			                  	</tbody>
 		                		                  	</table>
 		                		                </div>
-		                		                <input type="text" id="extra" name="extra" class="invisible form-control col-md-7 col-xs-12">
+		                		                <input type="text" id="txtfname1" name="txtfname1" class="invisible form-control col-md-7 col-xs-12">
+		                		                <input type="text" id="txtlname1" name="txtlname1" class="invisible form-control col-md-7 col-xs-12">
 		                		                <!-- modals -->
 												<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 													<div class="modal-dialog modal-lg">
@@ -188,7 +189,7 @@
 																				<div class="col-md-6 col-md-offset-3">
 																					<button id="btnrest" type="reset" class="btn btn-primary" onclick="clearData();">Reset</button>
 																					<button id="submit" class="btn btn-success" onclick="addCustomer();">Save and Select</button>
-																					<button id="update" style="display: none;" class="btn btn-success" onclick="selectEmployee();">Select</button>
+																					<button id="update" style="display: none;" class="btn btn-success" onclick="selectCustomer();">Select</button>
 																				</div>
 																			</div>
 																			<div class="ln_solid"></div>
@@ -334,7 +335,7 @@
 									  	                	</div>
 								              	        	<div class="form-group">
 								              	          		<div class="col-md-6 col-md-offset-9">
-								              	            		<button id="select" type="" class="btn btn-primary" onclick="Select();">Select</button>
+								              	            		<button id="select" type="button" class="btn btn-primary" onclick="Select();">Select</button>
 								              	          		</div>
 								              	        	</div>
 								              	      	</form>
@@ -378,8 +379,10 @@
 											        	            	</label>
 											        	            	<div class="col-md-6 col-sm-6 col-xs-12">
 											        	            		<textarea id="txtmeasurement" required="required" name="txtmeasurement" class="form-control col-md-7 col-xs-12" rows="4"></textarea>
+											        	            		<button id="selectMeasurement" name="selectMeasurement" type="button" class="btn btn-info" onclick="getMeasurement();">Add Old Measurement</button>
 											        	            	</div>
 											        	          	</div>
+											        	          	<input type="text" id="measid" name="measid" class="invisible form-control col-md-7 col-xs-12">
 											        	          	<div class="item form-group">
 											        	            	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtmoredetails">More Details </label>
 											        	            	<div class="col-md-6 col-sm-6 col-xs-12">
@@ -390,7 +393,7 @@
 											          	        	<div class="form-group">
 											        	            	<div class="col-md-6 col-md-offset-3">
 											      	              		<button type="reset" class="btn btn-primary">Clear</button>
-											      	              		<button id="savemeasurment" name="savemeasurment" type="submit" class="btn btn-success" onclick="Save();">Save</button>
+											      	              		<button id="savemeasurment" name="savemeasurment" type="button" class="btn btn-success" onclick="addMeasurement();">Save</button>
 											        	            	</div>
 											        	          	</div>
 											          	        </form>
@@ -408,39 +411,23 @@
 										            	        <div class="clearfix"></div>
 										            	    </div>
 								            	      		<div class="x_content">
-										            	        <form id="orderinfo_form" class="form-horizontal form-label-left" novalidate>
+										            	        <form id="orderform" class="form-horizontal form-label-left" novalidate>
 										            	          <input type="text" id="cusid2" name="cusid2" class="invisible 
-										            	          <h5>Enter order details</h5>form-control col-md-7 col-xs-12">
+										            	          form-control col-md-7 col-xs-12">
+										            	          <h5>Enter order details</h5>
 										            	          <input type="text" id="style_id2" name="style_id2" class="invisible form-control col-md-7 col-xs-12">
 										            	          <div class="item form-group">
 										            	            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price <span class="required">*</span>
 										            	            </label>
 										            	            <div class="col-md-6 col-sm-6 col-xs-12">
-										            	              <input id="price" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="1" name="price" required="required" type="text">
+										            	              <input id="price" class="form-control col-md-7 col-xs-12" name="price" required="required" type="text">
 										            	            </div>
 										            	          </div>
 										            	          <div class="item form-group">
 										            	            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="discount">Discount  </label>
 										            	            <div class="col-md-6 col-sm-6 col-xs-12">
-										            	              <input id="discount" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="1" name="discount" type="text">
+										            	              <input id="discount" class="form-control col-md-7 col-xs-12" name="discount" type="text">
 										            	            </div>
-										            	          </div>
-										            	          <div class="item form-group">
-										            	          	<label class="control-label col-md-3 col-sm-3 col-xs-12">Urgent Order</label>
-										            	          	<div class="radio col-md-6 col-sm-6 col-xs-12">
-								                			      		<label class="">YES:
-										                			      	<div class="iradio_flat-green" style="position: relative;">
-										                			      		<input type="radio" class="flat" name="urgent" id="yes" value="yes" style="position: absolute; opacity: 0;">
-										                			      		<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-										                			      	</div>
-										                			    </label>
-										                			    <label class="">NO:
-										                			      	<div class="iradio_flat-green" style="position: relative;">
-										                			      		<input type="radio" class="flat" name="urgent" id="no" value="no" style="position: absolute; opacity: 0;">
-										                			      		<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-										                			      	</div>
-										                			    </label>
-								                			      	</div>
 										            	          </div>
 										            	          <div class="item form-group">
 										            	            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fdate">Fit-on Date
@@ -461,7 +448,7 @@
 										            	            </label>
 										            	            <div class="col-md-6 col-sm-6 col-xs-12">
 										            	              <div class="form-group">
-										                                <div class="input-group date" id="myDatepicker2">
+										                                <div class="input-group date" id="myDatepicker1">
 										                                  <input id="ddate" name="ddate" type="text" class="form-control" required="required">
 										                                  <span class="input-group-addon">
 										                                    <span class="glyphicon glyphicon-calendar"></span>
@@ -477,12 +464,12 @@
 										            	              <textarea id="note" name="note" class="form-control col-md-7 col-xs-12"></textarea>
 										            	            </div>
 										            	          </div>
-										            	          <input type="text" id="msment_id2" name="msment_id2" class="invisible form-control col-md-7 col-xs-12">
+										            	          <input type="text" id="measid1" name="measid1" class="invisible form-control col-md-7 col-xs-12">
 										            	          <div class="ln_solid"></div>
 										            	          <div class="form-group">
 										            	            <div class="col-md-6 col-md-offset-3">
-										            	              <button type="reset" class="btn btn-primary" onclick="$('#orderinfo_form')[0].reset();">Reset</button>
-										            	              <button id="btnsendorder" type="button" class="btn btn-success">Submit</button>
+										            	              <button type="reset" class="btn btn-primary" onclick="$('#orderform')[0].reset();">Reset</button>
+										            	              <button id="btnsendorder" type="button" class="btn btn-success" onclick="addOrder();">Submit</button>
 										            	            </div>
 										            	          </div>
 										            	        </form>
@@ -526,7 +513,7 @@
 	  	//Load Customer data function  
 		function loadCustomerData() {
 			$.ajax({  
-				url: '../server.php?c=CustomerController&m=getAllCustomer',
+				url: '../server.php?c=CustomerController&m=getAllCustomerDESC',
 				type: "POST",  
 				dataType: "json",  
 				success: function (data) {  
@@ -567,7 +554,7 @@
 
 		function addCustomer(){
 
-		  var check = $('form')[0].checkValidity();
+		  var check = $('#customerform')[0].checkValidity();
 		  if(check == true){
 		    var fname =$("#txtfname").val();
 		    var lname =$("#txtlname").val();
@@ -593,7 +580,7 @@
 		        });
 		        
 		        loadCustomerData();
-		        clearData();
+		        $('#customerform')[0].reset()
 
 
 		      },  
@@ -624,8 +611,10 @@
 		      var lname = d.cusLname;
 
 		      $("#cusid").val(id);
-		      // $("#txtfname1").val(fname);
-		      // $("#txtlname1").val(lname);
+		      $("#cusid1").val(id);
+		      $("#cusid2").val(id);
+		      $("#txtfname1").val(fname);
+		      $("#txtlname1").val(lname);
 
 		      new PNotify({
 		          title: 'New Customer',
@@ -634,8 +623,8 @@
 		          styling: 'bootstrap3'
 		        });
 
-		       $("#extra").focus();
-		       document.getElementById("extra").focus();
+		       // $("#txtlname1").focus();
+		       // document.getElementById("txtfname1").focus();
 		    },
 		    dataType: 'json'
 		  });
@@ -644,9 +633,159 @@
 		function Select(){
 			var cusid =$("#cusid").val();
 			var style =$("input[name='style']:checked").val();
+			$("#style_id1").val(style);
+			$("#style_id2").val(style);
 			if(style){
-                alert("Your style is - " + style);
+				$("#style_id1").val(style);
+				$("#style_id2").val(style);
+                new PNotify({
+				        title: 'Style',
+				        text:  "Style (Style Id = "+style+") Susscessfully Selected",
+				        type: 'success',
+				        styling: 'bootstrap3'
+				    });
+            }else{
+            	new PNotify({
+				        title: 'Style',
+				        text:  "A Style is not Selected",
+				        type: 'warning',
+				        styling: 'bootstrap3'
+				    });
             }
+		}
+
+		function addOrder(){
+			var check = $('#orderform')[0].checkValidity();
+			if(check == true){
+			  var fname =$("#txtfname1").val();
+			  var lname =$("#txtlname1").val();
+			  var cusid =$("#cusid2").val();
+			  var cusname = fname+" "+lname;
+			  var styleid =$("#style_id2").val();
+			  var fitondate =$("#fdate").val();
+			  var deliverydate =$("#ddate").val();
+			  var price =$("#price").val();
+			  var discount =$("#discount").val();
+			  var description =$("#note").val();
+			  var measid =$("#measid1").val();
+
+			  var Data={cusid:cusid,cusname:cusname,styleid:styleid,fitondate:fitondate,deliverydate:deliverydate,price:price,discount:discount,description:description,measid:measid};
+
+			  $.ajax({  
+			    url: "../server.php?c=OrderController&m=addOrder",  
+			    data: Data,
+			    type: "POST",
+			    dataType: "json",  
+			    success: function (data) {
+			      // alert(data+ " Susscessfully added to the system");
+			      //adding measurement id
+			      new PNotify({
+			        title: 'New Order',
+			        text: data+ "Order is Susscessfully added to the system",
+			        type: 'success',
+			        styling: 'bootstrap3'
+			      });
+			      
+			      $('#orderform')[0].reset()
+			      window.setTimeout(window.location.href = "pendingorder.php",5000);
+
+			    },  
+			    error: function (errormessage) {  
+			      alert(errormessage.responseText);
+			      alert("Unable to add Order");
+			    }
+			  });    
+			}else{
+				$("#price").focus();
+			} 
+
+		}
+
+		function addMeasurement(){
+			var check = $('#measurementform')[0].checkValidity();
+			if(check == true){
+			  var fname =$("#txtfname1").val();
+			  var lname =$("#txtlname1").val();
+			  var cusid =$("#cusid1").val();
+			  var cusname = fname+" "+lname;
+			  var item =$("#txtitem").val();
+			  var measurement =$("#txtmeasurement").val();
+			  var moredetails =$("#txtmoredetails").val();
+
+			  var Data={cusid:cusid,cusname:cusname,item:item,measurement:measurement,moredetails:moredetails};
+
+			  $.ajax({  
+			    url: "../server.php?c=MeasurementController&m=addMeasurement",  
+			    data: Data,
+			    type: "POST",
+			    dataType: "json",  
+			    success: function (data) {
+			      // alert(data+ " Susscessfully added to the system");
+			      //adding measurement id
+			      new PNotify({
+			        title: 'Measurement',
+			        text: data+ "Measurement is Susscessfully added to the system",
+			        type: 'success',
+			        styling: 'bootstrap3'
+			      });
+			      $.ajax({
+			        url: '../server.php?c=MeasurementController&m=getAllMeasurementDESC',
+			        type: "POST",
+			    	dataType: "json",
+			        success:function(data){
+			          // alert(data);
+			          var d=data[0]; 
+			          var id = d.measId;
+			          alert(id);
+			          $("#measid").val(id);
+			          $("#measid1").val(id);
+			        },
+			      });
+			      
+			      $('#measurementform')[0].reset();
+
+			    },  
+			    error: function (errormessage) {  
+			      alert(errormessage.responseText);
+			      alert("Unable to add Measurement");
+			    }
+			  });    
+			}else{
+				$("#item").focus();
+				alert("not working");
+			} 
+
+		}
+
+		function getMeasurement(){
+		  // $("#profile-tab").tab("show");
+		  // $("#profile-tab").html("Update Measurement");
+		  var id =$("#cusid1").val();
+		  $.ajax({
+		    type: "POST",
+		    url: '../server.php?c=MeasurementController&m=getMeasurementBycusId',
+		    data: {'id':id},
+		    success: function(data){
+
+		      // alert(data);
+		      var d=data[0]; 
+		      var id = d.measId;
+		      var cusid = d.cusId;
+		      var cusname = d.cusName;
+		      var item = d.item;
+		      var measurement = d.measurement;
+		      var moredetails = d.moreDetails;
+
+		      $("#measid").val(id);
+		      $("#measid1").val(id);
+		      $("#cusid1").val(cusid);
+		      // $("#txtlname").val(cusname);
+		      $("#txtitem").val(item);
+		      $("#txtmeasurement").val(measurement);
+		      $("#txtmoredetails").val(moredetails);
+		    },
+		    dataType: 'json'
+		  });
 		}
 
 		function deleteCustomer(id) {  

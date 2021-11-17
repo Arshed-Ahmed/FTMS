@@ -24,7 +24,7 @@ class EmployeeController
         $status = $_POST['status'];
 		
 		$model = new EmployeeModel();
-		$insertId = $model->addEmployee($fname,$lname,$nic,$Pno,$email,$address,$startdate,$category,$status);
+		$insertId = $model->addEmployee($fname,$lname,$nic,$Pno,$email,$address,$category,$startdate,$status);
 
 		echo json_encode($insertId);
 	}

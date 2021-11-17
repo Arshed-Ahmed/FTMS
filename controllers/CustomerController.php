@@ -37,6 +37,12 @@ class CustomerController
 		echo json_encode($result);
 	}
 
+	function getAllCustomerDESC(){
+		$model = new CustomerModel();
+		$result = $model->getAllCustomerDESC();
+		echo json_encode($result);
+	}
+
 	function editCustomer(){
 		$id =$_POST['id'];
         $fname = $_POST['fname'];

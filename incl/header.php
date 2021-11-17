@@ -1,3 +1,14 @@
+<?php 
+session_start();
+//type (1= Admin, 2= Tailor, 3= Manager) ||&&($_SESSION['type']=="1" || $_SESSION['type']=="general_manager")
+if(isset($_SESSION['user'])){
+
+}
+else
+{
+      header("location:../index.php");
+}
+?>
 <!DOCTYPE html>
     <html lang="en">
         <head>

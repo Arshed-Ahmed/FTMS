@@ -202,11 +202,11 @@
       var Pno =$("#txttel").val();
       var email =$("#txtemail").val();
       var address =$("#txtaddress").val();
-      var startdate =$("#txtsdate").val();
       var category =$("#empcat").find('option:selected').val();
+      var startdate =$("#txtsdate").val();
       var status =$("#empstat").find('option:selected').val();
 
-      var empData={fname:fname,lname:lname,nic:nic,Pno:Pno,email:email,address:address,startdate:startdate,category:category,status:status};
+      var empData={fname:fname,lname:lname,nic:nic,Pno:Pno,email:email,address:address,category:category,startdate:startdate,status:status};
 
       $.ajax({  
         url: "../server.php?c=EmployeeController&m=addEmployee",  
@@ -286,9 +286,7 @@
       type: "POST",
       url: '../server.php?c=EmployeeController&m=getEmployee',
       data: {'id':id},
-      success:
-
-      function(data){
+      success: function(data){
         $('#employeeform')[0].reset();
         $("#submit").css("display","none");
         $("#update").css("display","");
@@ -388,6 +386,7 @@
             type: 'error',
             styling: 'bootstrap3'
           });
+          setTimeout(function() {location.reload()},1500);
         
         },  
         error: function (errormessage) {  
