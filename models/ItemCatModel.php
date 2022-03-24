@@ -20,7 +20,7 @@ class ItemCatModel
     );
 
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
-    return $iname;
+    return $insertId;
  }
 
 function editItemCat($name,$desc,$id) {
@@ -61,4 +61,3 @@ function getAllItemCat() {
     return $result;
 }
 }
-?>

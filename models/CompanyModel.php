@@ -6,8 +6,9 @@ class CompanyModel
     private $db_handle;
     private $table = 'company';
 
-    function __construct() {
-      $this->db_handle = new Connection();
+    function __construct()
+    {
+        $this->db_handle = new Connection();
     }
 
     // add Company info to tbl
@@ -29,7 +30,8 @@ class CompanyModel
     //     return $name;
     // }
 
-    function addLogo($location) {
+    function addLogo($location)
+    {
         $query = "UPDATE $this->table SET ,comLogo = ? WHERE comId = '1'";
         $paramType = "s";
         $paramValue = array(
@@ -37,10 +39,11 @@ class CompanyModel
         );
 
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
-        return $name;
+        return $insertId;
     }
 
-    function editCompany($name,$add,$city,$regno,$tel,$email,$web,$budget,$emp,$orders,$id) {
+    function editCompany($name, $add, $city, $regno, $tel, $email, $web, $budget, $emp, $orders, $id)
+    {
         $query = "UPDATE $this->table SET comName = ?,comAddress = ?,comCity = ?,comRegNo = ?,comTel = ?,comEmail = ?,comWeb = ?,budget = ?,employees = ?,orders = ?  WHERE comId = ?";
         $paramType = "ssssisssssi";
         $paramValue = array(
@@ -61,7 +64,8 @@ class CompanyModel
         return $name;
     }
 
-    function deleteCompany($id) {
+    function deleteCompany($id)
+    {
         $query = "DELETE FROM $this->table WHERE comId = ?";
         $paramType = "i";
         $paramValue = array(
@@ -70,7 +74,8 @@ class CompanyModel
         $this->db_handle->update($query, $paramType, $paramValue);
     }
 
-    function getCompanyById($id) {
+    function getCompanyById($id)
+    {
         $query = "SELECT * FROM $this->table WHERE comId = ?";
         $paramType = "i";
         $paramValue = array(
@@ -81,11 +86,10 @@ class CompanyModel
         return $result;
     }
 
-    function getAllCompany() {
+    function getAllCompany()
+    {
         $sql = "SELECT * FROM $this->table ORDER BY comId";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
 }
-
-?>
