@@ -1,16 +1,15 @@
 <?php
-	$class = $_GET['c'];
-	$method = $_GET['m'];
-	$filename = $class.'.php';
-	if(file_exists('controllers/'.$filename))
-	{
-		require('controllers/'.$filename);
-		call_user_func(array($class,$method));
-	}
-	else
-	{
-		die("Class not found");
-	}
+$class = $_GET['c'];
+$method = $_GET['m'];
+$filename = $class . '.php';
+if (file_exists('controllers/' . $filename)) {
+    require('controllers/' . $filename);
+    // call_user_func(array($class, $method));
+    $obj = new $class();
+    $obj->$method();
+} else {
+    die("Class not found");
+}
 
 
     // $keyword = strval($_GET['str']);
@@ -40,4 +39,3 @@
     // echo json_encode($typeahead);
   
     // $conn->close();
-?>
