@@ -1,5 +1,9 @@
 <!-- jQuery -->
+<<<<<<< Updated upstream
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
+=======
+<script src="../vendors/jquery/dist/jquery.js"></script>
+>>>>>>> Stashed changes
 <!-- typehead -->
 <script src="../vendors/typeahead/bootstrap-typeahead.js"></script>
 <script src="../vendors/typeahead/jquery-typeahead.js"></script>
