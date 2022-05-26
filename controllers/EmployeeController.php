@@ -7,64 +7,69 @@ $db_handle = new Connection();
 // private $model='';
 
 class EmployeeController
-{	
+{
 
 	function addEmployee()
 	{
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $nic = $_POST['nic'];
-        $Pno = $_POST['Pno'];
-        $email = $_POST['email'];
-        $address = $_POST['address'];
-        $startdate = '';
+		$fname = $_POST['fname'];
+		$lname = $_POST['lname'];
+		$nic = $_POST['nic'];
+		$Pno = $_POST['Pno'];
+		$email = $_POST['email'];
+		$address = $_POST['address'];
+		$startdate = '';
 		$startdate_timestamp = strtotime($_POST["startdate"]);
 		$startdate = date("Y-m-d", $startdate_timestamp);
-        $category = $_POST['category'];
-        $status = $_POST['status'];
-		
+		$salary = $_POST['salary'];
+		$category = $_POST['category'];
+		$status = $_POST['status'];
+
 		$model = new EmployeeModel();
-		$insertId = $model->addEmployee($fname,$lname,$nic,$Pno,$email,$address,$category,$startdate,$status);
+		$insertId = $model->addEmployee($fname, $lname, $nic, $Pno, $email, $address, $category, $startdate, $salary, $status);
 
 		echo json_encode($insertId);
 	}
 
-	function getEmployee(){
+	function getEmployee()
+	{
 		$id = $_POST['id'];
 		$model = new EmployeeModel();
 		$result = $model->getEmployeeById($id);
 		echo json_encode($result);
 	}
 
-	function getAllEmployee(){
+	function getAllEmployee()
+	{
 		$model = new EmployeeModel();
 		$result = $model->getAllEmployee();
 		echo json_encode($result);
 	}
 
-	function editEmployee(){
+	function editEmployee()
+	{
 		$id = $_POST['id'];
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $nic = $_POST['nic'];
-        $Pno = $_POST['Pno'];
-        $email = $_POST['email'];
-        $address = $_POST['address'];
-        $startdate = '';
+		$fname = $_POST['fname'];
+		$lname = $_POST['lname'];
+		$nic = $_POST['nic'];
+		$Pno = $_POST['Pno'];
+		$email = $_POST['email'];
+		$address = $_POST['address'];
+		$startdate = '';
 		$startdate_timestamp = strtotime($_POST["startdate"]);
 		$startdate = date("Y-m-d", $startdate_timestamp);
-        $category = $_POST['category'];
-        $status = $_POST['status'];
+		$salary = $_POST['salary'];
+		$category = $_POST['category'];
+		$status = $_POST['status'];
 
 		$model = new EmployeeModel();
-		$insertId = $model->editEmployee($fname,$lname,$nic,$Pno,$email,$address,$startdate,$category,$status,$id);
+		$insertId = $model->editEmployee($fname, $lname, $nic, $Pno, $email, $address, $startdate, $salary, $category, $status, $id);
 		echo json_encode($insertId);
 	}
 
-	function deleteEmployee(){
+	function deleteEmployee()
+	{
 		$id = $_POST["id"];
 		$Model = new EmployeeModel();
 		$Model->deleteEmployee($id);
 	}
 }
-?>

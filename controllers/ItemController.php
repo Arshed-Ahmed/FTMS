@@ -51,4 +51,3 @@ class ItemController
 		$Model->deleteItem($id);
 	}
 }
-?>
