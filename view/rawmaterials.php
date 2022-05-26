@@ -37,10 +37,10 @@
                           </div>
                         </div>
                         <div class="item form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtquan">Quantity <span class="required">*</span>
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtquan">Quantity (in m) <span class="required">*</span>
                           </label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="txtquan" name="txtquan" placeholder="Quantity e.g 3m" required="required"  class="form-control col-md-7 col-xs-12">
+                            <input type="number" id="txtquan" name="txtquan" placeholder="Quantity e.g 3m" required="required"  class="form-control col-md-7 col-xs-12">
                           </div>
                         </div>                          
                         <div class="item form-group">
@@ -68,15 +68,15 @@
                     	      <th>Item Name</th>
                     	      <th>Item Type</th>
                     	      <th>Colour</th>
-                    	      <th>Quantity</th>
+                    	      <th>Quantity (m)</th>
                             <th>Description</th>
                             <th>Stock Status</th>
                             <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Options</th>
                     	    </tr>
                     	</thead>
-                        <tbody>
-                            
-                        </tbody>
+                      <tbody>
+                          
+                      </tbody>
 
                 	
                 	</table>
@@ -129,7 +129,7 @@
               <td> '+name+' </td>\
               <td> '+type+' </td>\
               <td> '+col+' </td>\
-              <td> '+quan+' </td>\
+              <td> '+quan+' m </td>\
               <td> '+desc+' </td>\
               <td>\
                 <div class="radio">\

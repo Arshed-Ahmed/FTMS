@@ -1,227 +1,227 @@
-<?php include_once("../incl/header.php");?>
+<?php include_once("../incl/header.php"); ?>
 <!-- page content -->
 
-    <div class="row">
+<div class="row">
 
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Order Info</h2>
-                    <div class="clearfix"></div>
-                </div>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Order Info</h2>
+        <div class="clearfix"></div>
+      </div>
 
-                <div class="x_content">
-                	
-                  <table id="ordertable" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th style="width: 9px">ID No</th>
-                        <th>Customer Name</th>
-                        <th>Delivery Date</th>
-                        <th>Total Price</th>
-                        <th>Order Description</th>
-                        <th>Measurement Details</th>
-                        <th>Order Progress</th>
-                        <th>Option</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      
-                    </tbody>
-                  </table>
+      <div class="x_content">
 
-                  <!-- Measurement large modal -->
-                  <div class="modal fade bs-measurement" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
+        <table id="ordertable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th style="width: 9px">ID No</th>
+              <th>Customer Name</th>
+              <th>Delivery Date</th>
+              <th>Total Price</th>
+              <th>Order Description</th>
+              <th>Measurement Details</th>
+              <th>Order Progress</th>
+              <th>Option</th>
+            </tr>
+          </thead>
+          <tbody>
 
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel1">Measurement preview</h4>
-                        </div>
-                        <div class="modal-body">
-                            <table id="measurementtable" class="table table-bordered">
-                              <thead>
-                                <tr>
-                                  <th>Headers</th>
-                                  <th>Details</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                
-                              </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+          </tbody>
+        </table>
 
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /modals -->
+        <!-- Measurement large modal -->
+        <div class="modal fade bs-measurement" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-                  <!-- Order large modal -->
-                  <div class="modal fade bs-order" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Measurement preview</h4>
+              </div>
+              <div class="modal-body">
+                <table id="measurementtable" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Headers</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel1">Edit Order details</h4>
-                        </div>
-                        <div class="modal-body">
-                          <form id="orderform" class="form-horizontal form-label-left" novalidate>
-                            <input type="text" id="txtordid" name="txtordid" class="invisible 
-                            form-control col-md-7 col-xs-12">
-                            <input type="text" id="txtcusid" name="txtcusid" class="invisible 
-                            form-control col-md-7 col-xs-12">
-                            <h5>Enter order details</h5>
-                            <div class="item form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtcusname">Customer Name <span class="required">*</span>
-                              </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtcusname" class="form-control col-md-7 col-xs-12" name="txtcusname" required="required" type="text">
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price <span class="required">*</span>
-                              </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="price" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="1" name="price" required="required" type="text">
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="discount">Discount  </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="discount" class="form-control col-md-7 col-xs-12"  name="discount" type="text">
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fdate">Fit-on Date
-                              </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group date" id="myDatepicker2">
-                                      <input id="fdate" name="fdate" type="text" class="form-control">
-                                      <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                      </span>
-                                    </div>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddate">Delivery Date <span class="required">*</span>
-                              </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group date" id="myDatepicker1">
-                                      <input id="ddate" name="ddate" type="text" class="form-control" required="required">
-                                      <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                      </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="note">Description or Note
-                              </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea id="note" name="note" class="form-control col-md-7 col-xs-12"></textarea>
-                              </div>
-                            </div>
-                            <input type="text" id="txtstyleid" name="txtstyleid" class="invisible 
-                            form-control col-md-7 col-xs-12">
-                            <div class="ln_solid"></div>
-                            <div class="form-group">
-                              <div class="col-md-6 col-md-offset-3">
-                                <button type="reset" class="btn btn-primary" onclick="$('#orderform')[0].reset();">Reset</button>
-                                <button id="btnsendorder" type="button" class="btn btn-success" onclick="updateOrder();">Submit</button>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
 
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /modals -->
-
-                  <!-- Change Progress Small modal -->
-                  <div class="modal fade bs-status" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                        <form id="progressform" name="progressform" class="form-horizontal form-label-left" novalidate>
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title" id="myModalLabel2">Change Progress preview</h4>
-                          </div>
-                          <div class="modal-body">
-                            <div class="item form-group">
-                              <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtordid1">Order Id </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtordid1" class="form-control col-md-7 col-xs-12" name="txtordid1" required="required" type="text">
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtcusname1">Customer Name </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtcusname1" class="form-control col-md-7 col-xs-12" name="txtcusname1" required="required" type="text">
-                              </div>
-                            </div>
-                            <div class="item form-group">
-                              <label class="control-label col-md-6 col-sm-6 col-xs-12" for="progress">Status <span class="required">*</span>
-                              </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="progress" class="select2_single form-control" tabindex="-1" required="required">
-                                  <option value="0">In progress</option>
-                                  <option value="1">Finished</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="reset" class="btn btn-primary" onclick="$('#progressform')[0].reset();">Reset</button>
-                            <button id="chaneprogress" name="chaneprogress" type="button" class="btn btn-success" onclick="updateProgress();">Save</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                        </form>
-
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /modals -->
-
-                </div>
             </div>
+          </div>
         </div>
+        <!-- /modals -->
+
+        <!-- Order large modal -->
+        <div class="modal fade bs-order" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Edit Order details</h4>
+              </div>
+              <div class="modal-body">
+                <form id="orderform" class="form-horizontal form-label-left" novalidate>
+                  <input type="text" id="txtordid" name="txtordid" class="invisible 
+                            form-control col-md-7 col-xs-12">
+                  <input type="text" id="txtcusid" name="txtcusid" class="invisible 
+                            form-control col-md-7 col-xs-12">
+                  <h5>Enter order details</h5>
+                  <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtcusname">Customer Name <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <input id="txtcusname" class="form-control col-md-7 col-xs-12" name="txtcusname" required="required" type="text">
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <input id="price" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="1" name="price" required="required" type="text">
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="discount">Discount </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <input id="discount" class="form-control col-md-7 col-xs-12" name="discount" type="text">
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fdate">Fit-on Date
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <div class="input-group date" id="myDatepicker2">
+                          <input id="fdate" name="fdate" type="text" class="form-control">
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddate">Delivery Date <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <div class="input-group date" id="myDatepicker1">
+                          <input id="ddate" name="ddate" type="text" class="form-control" required="required">
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="note">Description or Note
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <textarea id="note" name="note" class="form-control col-md-7 col-xs-12"></textarea>
+                    </div>
+                  </div>
+                  <input type="text" id="txtstyleid" name="txtstyleid" class="invisible 
+                            form-control col-md-7 col-xs-12">
+                  <div class="ln_solid"></div>
+                  <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3">
+                      <button type="reset" class="btn btn-primary" onclick="$('#orderform')[0].reset();">Reset</button>
+                      <button id="btnsendorder" type="button" class="btn btn-success" onclick="updateOrder();">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /modals -->
+
+        <!-- Change Progress Small modal -->
+        <div class="modal fade bs-status" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <form id="progressform" name="progressform" class="form-horizontal form-label-left" novalidate>
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title" id="myModalLabel2">Change Progress preview</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="item form-group">
+                    <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtordid1">Order Id </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <input id="txtordid1" class="form-control col-md-7 col-xs-12" name="txtordid1" required="required" type="text">
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtcusname1">Customer Name </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <input id="txtcusname1" class="form-control col-md-7 col-xs-12" name="txtcusname1" required="required" type="text">
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="control-label col-md-6 col-sm-6 col-xs-12" for="progress">Status <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <select id="progress" class="select2_single form-control" tabindex="-1" required="required">
+                        <option value="0">In progress</option>
+                        <option value="1">Finished</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="reset" class="btn btn-primary" onclick="$('#progressform')[0].reset();">Reset</button>
+                  <button id="chaneprogress" name="chaneprogress" type="button" class="btn btn-success" onclick="updateProgress();">Save</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+        <!-- /modals -->
+
+      </div>
     </div>
   </div>
+</div>
+</div>
 </div>
 <!-- /page content -->
 <?php include_once("../incl/footer.php"); ?>
 
 <script type="text/javascript">
-  $(document).ready(function (){
-        $('#title').text('Order Management');
-        $('#breadcrumb').text('Order Status');
-        loadOrderData();
-    });
+  $(document).ready(function() {
+    $('#title').text('Order Management');
+    $('#breadcrumb').text('Order Status');
+    loadOrderData();
+  });
 
-  function loadOrderData() {  
+  function loadOrderData() {
     // alert("ok");
-    $.ajax({  
+    $.ajax({
       url: '../server.php?c=OrderController&m=getAllOrder',
-      type: "POST",  
-      dataType: "json",  
-      success: function (data) {  
+      type: "POST",
+      dataType: "json",
+      success: function(data) {
         // alert(JSON.stringify(data));
         var table = $('#ordertable').DataTable();
         $("#ordertable tbody").empty();
@@ -229,12 +229,12 @@
         for (i = 0; i < data.length; i++) {
           var id = data[i].ordid;
           var cusname = data[i].cusName;
-          var styleid =data[i].styleId;
-          var fitondate =data[i].fitonDate;
-          var deliverydate =data[i].deliveryDate;
+          var styleid = data[i].styleId;
+          var fitondate = data[i].fitonDate;
+          var deliverydate = data[i].deliveryDate;
           var price = data[i].ordPrice;
           var discount = data[i].ordDiscount;
-          var totalprice = price-discount;
+          var totalprice = price - discount;
           var description = data[i].ordDescription;
           var measid = data[i].measId;
           var progress = data[i].ordProgress;
@@ -249,29 +249,29 @@
           var func_edit = 'getOrder(' + id + ')';
           var func_delete = 'deleteOrder(' + id + ')';
 
-          row = 
-          ' <tr>\
-              <td> '+id+'  </td>\
-              <td> '+cusname+'</td>\
-              <td> '+deliverydate+'  </td>\
-              <td> Rs. '+totalprice+'  </td>\
-              <td> '+description+'  </td>\
+          row =
+            ' <tr>\
+              <td> ' + id + '  </td>\
+              <td> ' + cusname + '</td>\
+              <td> ' + deliverydate + '  </td>\
+              <td> Rs. ' + totalprice + '  </td>\
+              <td> ' + description + '  </td>\
               <td> \
-                <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".bs-measurement" onclick="'+func_view+'"><i class="fa fa-file-o"></i> Show </a>\
+                <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".bs-measurement" onclick="' + func_view + '"><i class="fa fa-file-o"></i> Show </a>\
               </td>\
-              <td style="color:blue; text-decoration: underline;"> '+status+' <br>\
-                <a href="#" class="btn btn-info btn-xs" onclick="'+func_edit+'" data-toggle="modal" data-target=".bs-status" ><i class="fa fa-pencil"></i>Update Progress </a>\
+              <td style="color:blue; text-decoration: underline;"> ' + status + ' <br>\
+                <a href="#" class="btn btn-info btn-xs" onclick="' + func_edit + '" data-toggle="modal" data-target=".bs-status" ><i class="fa fa-pencil"></i>Update Progress </a>\
               </td>\
               <td>\
-                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target=".bs-order" onclick="'+func_edit+'"><i class="fa fa-pencil"></i> Edit </a>\
-                <a href="#" class="btn btn-danger btn-xs" onclick="'+func_delete+'"><i class="fa fa-trash-o"></i> Delete </a>\
+                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target=".bs-order" onclick="' + func_edit + '"><i class="fa fa-pencil"></i> Edit </a>\
+                <a href="#" class="btn btn-danger btn-xs" onclick="' + func_delete + '"><i class="fa fa-trash-o"></i> Delete </a>\
               </td>';
 
           $("#ordertable tbody").append(row);
         }
         $('#ordertable').DataTable()
       }
-    });  
+    });
   }
 
   // function loadMeasurementData() {  
@@ -333,49 +333,59 @@
   //   });  
   // }
 
-  function updateOrder(){
-      var check = $('#orderform')[0].checkValidity();
-      if(check == true){
-        var id =$("#txtordid").val();
-        var cusid =$("#txtcusid").val();
-        var cusname =$("#txtcusname").val();
-        var styleid =$("txtstyleid").val();
-        var fitondate =$("#fdate").val();
-        var deliverydate =$("#ddate").val();
-        var price =$("#price").val();
-        var discount =$("#discount").val();
-        var description =$("#note").val();
+  function updateOrder() {
+    var check = $('#orderform')[0].checkValidity();
+    if (check == true) {
+      var id = $("#txtordid").val();
+      var cusid = $("#txtcusid").val();
+      var cusname = $("#txtcusname").val();
+      var styleid = $("txtstyleid").val();
+      var fitondate = $("#fdate").val();
+      var deliverydate = $("#ddate").val();
+      var price = $("#price").val();
+      var discount = $("#discount").val();
+      var description = $("#note").val();
 
-        var Data={cusid:cusid,cusname:cusname,styleid:styleid,fitondate:fitondate,deliverydate:deliverydate,price:price,discount:discount,description:description,id:id};
+      var Data = {
+        cusid: cusid,
+        cusname: cusname,
+        styleid: styleid,
+        fitondate: fitondate,
+        deliverydate: deliverydate,
+        price: price,
+        discount: discount,
+        description: description,
+        id: id
+      };
 
-        $.ajax({  
-          url: "../server.php?c=OrderController&m=editOrder",  
-          data: Data,
-          type: "POST",
-          dataType: "json",  
-          success: function (data) {
-            // alert(data+ " Susscessfully added to the system");
-            //adding measurement id
-            new PNotify({
-              title: 'Update Order',
-              text: data+ "Order is Susscessfully Updated",
-              type: 'success',
-              styling: 'bootstrap3'
-            });
-            
-            $('#orderform')[0].reset()
+      $.ajax({
+        url: "../server.php?c=OrderController&m=editOrder",
+        data: Data,
+        type: "POST",
+        dataType: "json",
+        success: function(data) {
+          // alert(data+ " Susscessfully added to the system");
+          //adding measurement id
+          new PNotify({
+            title: 'Update Order',
+            text: data + "Order is Susscessfully Updated",
+            type: 'success',
+            styling: 'bootstrap3'
+          });
 
-          },  
-          error: function (errormessage) {  
-            alert(errormessage.responseText);
-            alert("Unable to add Order");
-          }
-        });    
-      }else{
-        $("#price").focus();
-      } 
+          $('#orderform')[0].reset()
 
+        },
+        error: function(errormessage) {
+          alert(errormessage.responseText);
+          alert("Unable to add Order");
+        }
+      });
+    } else {
+      $("#price").focus();
     }
+
+  }
 
   // function addOrder(){
   //   var check = $('form')[0].checkValidity();
@@ -399,14 +409,14 @@
   //       dataType: "json",  
   //       success: function (data) {
   //         // alert(data+ " Susscessfully added to the system");
-          
+
   //         new PNotify({
   //           title: 'New Order',
   //           text: data+ " Susscessfully added to the system",
   //           type: 'success',
   //           styling: 'bootstrap3'
   //         });
-          
+
   //         loadOrderData();
   //         clearData();
 
@@ -419,78 +429,82 @@
   //   }else{
   //     $("#txtfname").focus();
   //   } 
-    
+
   // }
 
 
-  function viewMeasurement(id){
+  function viewMeasurement(id) {
     // alert(id);
     $.ajax({
       type: "POST",
       url: '../server.php?c=MeasurementController&m=getMeasurement',
-      data: {'id':id},
-      success: function (data){
+      data: {
+        'id': id
+      },
+      success: function(data) {
         // alert(data);
         var table = $('#measurementtable').DataTable();
         $("#measurementtable tbody").empty();
-          var d=data[0];
-          var id = d.measId;
-          var cusid = d.cusid;
-          var cusname = d.cusName;
-          var item = d.item;
-          var measurement = d.measurement;
-          var details = d.moreDetails;
+        var d = data[0];
+        var id = d.measId;
+        var cusid = d.cusid;
+        var cusname = d.cusName;
+        var item = d.item;
+        var measurement = d.measurement;
+        var details = d.moreDetails;
 
-          var func_edit = 'getMeasurement(' + id + ')';
-          var func_delete = 'deleteMeasurement(' + id + ')';
+        var func_edit = 'getMeasurement(' + id + ')';
+        var func_delete = 'deleteMeasurement(' + id + ')';
 
-          row =
-            '<tr>\
+        row =
+          '<tr>\
               <th>ID No</th>\
-              <td>'+id+'</td>\
+              <td>' + id + '</td>\
             </tr>\
             <tr>\
               <th>Customer Name</th>\
-              <td>'+cusname+'</td>\
+              <td>' + cusname + '</td>\
             </tr>\
             <tr>\
               <th>Item</th>\
-              <td>'+item+'</td>\
+              <td>' + item + '</td>\
             </tr>\
             <tr>\
               <th>Measurements</th>\
-              <td>'+measurement+'</td>\
+              <td>' + measurement + '</td>\
             </tr>\
             <tr>\
               <th>Details</th>\
-              <td>'+details+'</td>\
+              <td>' + details + '</td>\
             </tr>\
             <tr>\
               <th>Option</th>\
               <td>\
-                <a href="#" class="btn btn-info btn-xs" onclick="'+func_edit+'"><i class="fa fa-pencil"></i> Edit </a>\
-                <a href="#" class="btn btn-danger btn-xs" onclick="'+func_delete+'"><i class="fa fa-trash-o"></i> Delete </a>\
+                <a href="#" class="btn btn-info btn-xs" onclick="' + func_edit + '"><i class="fa fa-pencil"></i> Edit </a>\
+                <a href="#" class="btn btn-danger btn-xs" onclick="' + func_delete + '"><i class="fa fa-trash-o"></i> Delete </a>\
               </td>\
             </tr>\
             ';
 
-          $("#measurementtable tbody").append(row);
-        
+        $("#measurementtable tbody").append(row);
+
       },
-    dataType: 'json'
+      dataType: 'json'
     });
   }
 
-  function getOrder(id){
+  function getOrder(id) {
     $('#progressform')[0].reset();
     $.ajax({
       type: "POST",
       url: '../server.php?c=OrderController&m=getOrder',
-      data: {'id':id},
-      success: function(data){
+      data: {
+        'id': id
+      },
+      success: function(data) {
 
         // alert(data);
-        var d=data[0]; 
+        var d = data[0];
         var id = d.ordid;
         var cusid = d.cusid;
         var cusname = d.cusName;
@@ -521,53 +535,60 @@
   }
 
   //Add Order data Function   
-  function updateProgress(){ 
+  function updateProgress() {
     var check = $('#progressform')[0].checkValidity();
-    if(check == true){
-      var ordid =$("#txtordid1").val();
-      var progress =$("#progress").find('option:selected').val();
+    if (check == true) {
+      var ordid = $("#txtordid1").val();
+      var progress = $("#progress").find('option:selected').val();
 
-      var Data={ordid:ordid,progress:progress};
+      var Data = {
+        ordid: ordid,
+        progress: progress
+      };
 
-      $.ajax({  
-        url: "../server.php?c=OrderController&m=editProgress",  
+      $.ajax({
+        url: "../server.php?c=OrderController&m=editProgress",
         data: Data,
         type: "POST",
-        dataType: "json",  
-        success: function (data) {
+        dataType: "json",
+        success: function(data) {
           // alert(data+ " Susscessfully added to the system");
           //adding measurement id
           new PNotify({
             title: 'Progress',
-            text: data+ "Progress Susscessfully updated",
+            text: data + "Progress Susscessfully updated",
             type: 'success',
             styling: 'bootstrap3'
           });
           $('#progressform')[0].reset();
-          setTimeout(function() {location.reload()},1500);
+          setTimeout(function() {
+            location.reload()
+          }, 1500);
 
-        },  
-        error: function (errormessage) {  
+        },
+        error: function(errormessage) {
           alert(errormessage.responseText);
           alert("Unable to add Order");
         }
-      });    
-    }else{
+      });
+    } else {
       $("#progress").focus();
-    } 
+    }
 
   }
 
-  function deleteOrder(id) {  
+  function deleteOrder(id) {
     var ans = confirm("Are you sure you want to delete this Record?");
 
-    if (ans) {  
-      $.ajax({  
+    if (ans) {
+      $.ajax({
         url: "../server.php?c=OrderController&m=deleteOrder",
-        data: {'id':id},
-        type: "POST",  
-          // dataType: "json",  
-          success: function (data) { 
+        data: {
+          'id': id
+        },
+        type: "POST",
+        // dataType: "json",  
+        success: function(data) {
           // alert('Deleted');
           loadOrderData();
           new PNotify({
@@ -576,26 +597,30 @@
             type: 'error',
             styling: 'bootstrap3'
           });
-          setTimeout(function() {location.reload()},1500);
-        
-        },  
-        error: function (errormessage) {  
-          alert(errormessage.responseText);  
-        }  
+          setTimeout(function() {
+            location.reload()
+          }, 1500);
+
+        },
+        error: function(errormessage) {
+          alert(errormessage.responseText);
+        }
       });
-    }  
+    }
   }
 
-  function deleteMeasurement(id) {  
+  function deleteMeasurement(id) {
     var ans = confirm("Are you sure you want to delete this Record?");
 
-    if (ans) {  
-      $.ajax({  
+    if (ans) {
+      $.ajax({
         url: "../server.php?c=MeasurementController&m=deleteMeasurement",
-        data: {'id':id},
-        type: "POST",  
-          // dataType: "json",  
-          success: function (data) { 
+        data: {
+          'id': id
+        },
+        type: "POST",
+        // dataType: "json",  
+        success: function(data) {
           // alert('Deleted');
           // loadMeasurementData();
           new PNotify({
@@ -604,14 +629,16 @@
             type: 'error',
             styling: 'bootstrap3'
           });
-          setTimeout(function() {location.reload()},1500);
-        
-        },  
-        error: function (errormessage) {  
-          alert(errormessage.responseText);  
-        }  
+          setTimeout(function() {
+            location.reload()
+          }, 1500);
+
+        },
+        error: function(errormessage) {
+          alert(errormessage.responseText);
+        }
       });
-    }  
+    }
   }
 
   function Reload() {
