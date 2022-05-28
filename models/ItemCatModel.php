@@ -21,15 +21,9 @@ class ItemCatModel
             $desc
         );
 
-<<<<<<< Updated upstream
-    $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
-    return $insertId;
- }
-=======
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
         return $name;
     }
->>>>>>> Stashed changes
 
     function editItemCat($name, $desc, $id)
     {
