@@ -5,7 +5,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Purchase Info</h2>
+            <h2>Return Purchase Info</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -26,7 +26,7 @@
 
           <div class="x_content">
             <form id="poform" class="form-horizontal form-label-left" novalidate="">
-                <p>Manage Purchase Order</p>
+                <p>Manage Return Purchase Order</p>
                 <input type="text" id="id" name="id" class="invisible form-control col-md-7 col-xs-12">
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="poitem">Purchased Item <span class="required">*</span></label>
@@ -35,6 +35,7 @@
                       <option>Select the Ordered Item</option>
                     </select>
                   </div>
+                  <button type="button" class="btn btn-sm btn-info col-md-2 col-sm-2 col-xs-2" onclick="window.location.href = ('rawmaterials.php');">+ New Item</button>
                 </div>
                 <div class="item form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fname">Purchase Date <span class="required">*</span>
@@ -57,6 +58,7 @@
                       <option>Select the Ordered Supplier</option>
                     </select>
                   </div>
+                  <button type="button" class="btn btn-sm btn-info col-md-2 col-sm-2 col-xs-2" onclick="window.location.href = ('supplier.php');">+ New Supplier</button>
                 </div>
                 <input type="text" id="pre_quan" name="pre_quan" class="invisible form-control col-md-7 col-xs-12">
                 <div class="ln_solid"></div>
