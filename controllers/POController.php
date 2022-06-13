@@ -13,12 +13,14 @@ class POController
 	{
 		$poitem = $_POST['poitem'];
 		$quan = $_POST['quan'];
+		$uprice = $_POST['uprice'];
+		$price = $_POST['price'];
     	$supplier = $_POST['supplier'];
 		$startdate_timestamp = strtotime($_POST["podate"]);
 		$podate = date("Y-m-d", $startdate_timestamp);
 
 		$model = new POModel();
-		$insertId = $model->addPO($poitem, $quan, $podate,$supplier);
+		$insertId = $model->addPO($poitem, $quan, $uprice, $price, $podate,$supplier);
 
 		echo json_encode($insertId);
 	}
@@ -43,13 +45,15 @@ class POController
 		$id = $_POST['id'];
 		$poitem = $_POST['poitem'];
 		$quan = $_POST['quan'];
+		$uprice = $_POST['uprice'];
+		$price = $_POST['price'];
     	$supplier = $_POST['supplier'];
 		$startdate_timestamp = strtotime($_POST["podate"]);
 		$podate = date("Y-m-d", $startdate_timestamp);
 		
 
 		$model = new POModel();
-		$insertId = $model->editPO($poitem, $quan, $podate,$supplier, $id);
+		$insertId = $model->editPO($poitem, $quan, $uprice, $price , $podate,$supplier, $id);
 		echo json_encode($insertId);
 	}
 
