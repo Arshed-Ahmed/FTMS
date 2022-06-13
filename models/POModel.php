@@ -12,13 +12,15 @@ class POModel
     }
 
     // add PO info to tbl
-    function addPO($poitem, $quan , $podate,$supplier)
+    function addPO($poitem, $quan, $uprice, $price , $podate,$supplier)
     {
-        $query = "INSERT INTO $this->table (itid, poQuantity , poDate, supid) VALUES ( ?, ?, ?, ?)";
-        $paramType = "iisi";
+        $query = "INSERT INTO $this->table (itid, poQuantity , poUnitPrice, poPrice, poDate, supid) VALUES ( ?, ?, ?, ?)";
+        $paramType = "iiiisi";
         $paramValue = array(
             $poitem,
             $quan,
+            $uprice, 
+            $price ,
             $podate,
             $supplier
         );
@@ -27,13 +29,15 @@ class POModel
         return $poitem;
     }
 
-    function editPO($poitem, $quan, $podate,$supplier, $id)
+    function editPO($poitem, $quan, $uprice, $price , $podate,$supplier, $id)
     {
-        $query = "UPDATE $this->table SET itid = ?,  poQuantity = ?,  poDate = ?, supid = ? WHERE poid = ?";
-        $paramType = "iisii";
+        $query = "UPDATE $this->table SET itid = ?,  poQuantity = ?,  poUnitPrice = ? , poPrice = ? ,  poDate = ?, supid = ? WHERE poid = ?";
+        $paramType = "iiiisii";
         $paramValue = array(
             $poitem,
             $quan,
+            $uprice, 
+            $price ,
             $podate,
             $supplier,
             $id
