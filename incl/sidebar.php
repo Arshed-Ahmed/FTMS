@@ -2,7 +2,7 @@
   <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
       <div class="navbar nav_title" style="border: 0;">
-        <p class="site_title"><img src="../view/images/logo35crop.png"> </p>
+        <p class="site_title" style="padding-left:0;" ><img src="../view/images/logo35crop.png"></p>
       </div>
 
       <div class="clearfix"></div>
@@ -90,9 +90,7 @@
               <ul class="nav child_menu">
                 <li><a href="tailormade.php">New Order</a></li>
                 <li><a href="pendingorder.php">Order Status</a></li>
-                <li><a href="completedorder.php">Return Order</a></li>
-                <!-- <li><a href="criticalorder.php">Critical Order</a></li>
-                      <li><a href="returnorder.php">Return Order</a></li> -->
+                <li><a href="orderreturn.php">Return Order</a></li>
               </ul>
             </li>
             <li><a><i class="fa fa-shopping-cart"></i> Purchase Management <span class="fa fa-chevron-down"></span></a>
@@ -150,10 +148,10 @@
 
   <!-- top navigation -->
   <div class="top_nav">
-    <div class="nav_menu" style=" background-image : download.jpg">
+    <div class="nav_menu" style=" background: url('images/download.jpg');">
       <nav>
         <div class="nav toggle">
-          <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+          <a id="menu_toggle" style="color:black"><i class="fa fa-bars"></i></a>
         </div>
 
         <ul class="nav navbar-nav navbar-right">

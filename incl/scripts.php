@@ -1,9 +1,7 @@
 <!-- jQuery -->
-<<<<<<< Updated upstream
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
-=======
 <script src="../vendors/jquery/dist/jquery.js"></script>
->>>>>>> Stashed changes
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 <!-- typehead -->
 <script src="../vendors/typeahead/bootstrap-typeahead.js"></script>
 <script src="../vendors/typeahead/jquery-typeahead.js"></script>
@@ -15,6 +13,14 @@
 <script src="../vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
 <script src="../vendors/nprogress/nprogress.js"></script>
+
+<!-- Chart.js -->
+<!-- <script src="../vendors/Chart.js/dist/Chart.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<!-- ECharts -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+<!-- <script src="../vendors/echarts/dist/echarts.min.js"></script> -->
+<!-- <script src="../vendors/echarts/map/js/world.js"></script> -->
 <!-- Datatables -->
 <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -31,11 +37,6 @@
 <script src="../vendors/jszip/dist/jszip.min.js"></script>
 <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
-<!-- Chart.js -->
-<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-<!-- ECharts -->
-<script src="../vendors/echarts/dist/echarts.min.js"></script>
-<script src="../vendors/echarts/map/js/world.js"></script>
 <!-- Select2 -->
 <script src="../vendors/select2/dist/js/select2.full.min.js"></script>
 <!-- bootstrap-datetimepicker -->
@@ -62,6 +63,9 @@
 <script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>
+<!-- Require CSS -->
+<!-- <script data-main="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js" src="../vendors/require.js"></script>
+<script> var require = { urlArgs: "v=0.4.1.32" }; </script> -->
 
 <script>
     $(document).ready(function() {
