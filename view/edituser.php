@@ -34,8 +34,8 @@
 <!-- /page content -->
 
 <!-- Start view modal -->
-<div id="viewmodal" class="modal fade bs-example-modal-lg" tabindex="-1" role="viewmodal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div id="viewmodal" class="modal fade bs-example-modal-sm" tabindex="-1" role="viewmodal" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -46,22 +46,7 @@
       <div class="modal-body">
         <table id="UserInfoView" class="table">
           <tbody>
-            <tr>
-              <th style="width:25%">User Id:</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>User Name:</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>User Type:</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>Status:</th>
-              <td></td>
-            </tr>
+            
           </tbody>
         </table>
       </div>
@@ -230,39 +215,33 @@
       success:
       function (data){
         // alert(data);
-        var table = $('#UserInfoView').DataTable();
-        $("#UserInfoView").empty();
         var td='';
 
-        for (i = 0; i < data.length; i++) {
           var d=data[0];
           var id = d.id;
           var name = d.usr_id;
           var type = d.usr_type;
           var status = d.usr_status;
 
-          td+=
-            '<tbody>\
-            <tr>\
-              <th style="width:25%">User Id:</th>\
+          td=
+          ' <tr>\
+              <th style="width:50%">User Id:</th>\
               <td> '+id+'</td>\
             </tr>\
             <tr>\
-              <th style="width:25%">User Name:</th>\
+              <th style="width:50%">User Name:</th>\
               <td> '+name+'</td>\
             </tr>\
             <tr>\
-              <th style="width:25%">User Type:</th>\
+              <th style="width:50%">User Type:</th>\
               <td> '+type+'  </td>\
             </tr>\
             <tr>\
-              <th style="width:25%">User Status:</th>\
+              <th style="width:50%">User Status:</th>\
               <td> '+status+'  </td>\
-            </tr>\
-            </tbody>';
+            </tr>';
 
-          $("#UserInfoView").html(td);
-        }
+          $("#UserInfoView tbody").append(td);
       },
     dataType: 'json'
     });

@@ -47,10 +47,21 @@
                 <div class="item form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtquan">Quantity (in m) <span class="required">*</span>
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-5 col-sm-5 col-xs-11">
                     <input type="number" id="txtquan" name="txtquan" placeholder="Quantity e.g 3m" required="required"  class="form-control col-md-7 col-xs-12">
                   </div>
-                </div>  
+                  <label class="control-label col-md-1 col-sm-1 col-xs-1" for="uprice">meter
+                  </label>
+                </div> 
+                <div class="item form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="uprice">Unit Price <span class="required">*</span>
+                  </label>
+                  <div class="col-md-5 col-sm-5 col-xs-11">
+                    <input id="uprice" class="form-control col-md-7 col-xs-12" name="uprice" placeholder="00.00" required="required" type="number">
+                  </div>
+                  <label class="control-label col-md-1 col-sm-1 col-xs-1" for="uprice">LKR
+                  </label>
+                </div> 
                 <div class="item form-group">
                   <label for="supplier" class="control-label col-md-3">Supplier <span class="required">*</span></label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
@@ -78,6 +89,7 @@
                   <th style="width: 9px">ID No</th>
                   <th>Item</th>
                   <th style="width: 150px">Purchased Quantity (in m)</th>
+                  <th style="width: 150px">Price</th>
                   <th style="width: 100px">Date</th>
                   <th style="width: 150px">Supplier</th>
                   <th style="width: 100px">Options</th>
@@ -235,6 +247,7 @@
           var id = data[i].poid;
           var itid = data[i].itid;
           var quan = data[i].poQuantity;
+          var price = data[i].poPrice;
           var podate = data[i].poDate;
           var supid = data[i].supid;
 
@@ -250,6 +263,7 @@
               <td> ' + id + '  </td>\
               <td> ' + item + '</td>\
               <td> ' + quan + '</td>\
+              <td> ' + price + '</td>\
               <td> ' + podate + '  </td>\
               <td> ' + supname + '  </td>\
               <td>\
@@ -271,10 +285,13 @@
       var podate = $("#podate").val();
       var supplier = $("#supplier").val();
       var quan = $("#txtquan").val();
-
+      var uprice = $("#uprice").val();
+      var price = (parseInt(quan))*(parseInt(uprice));
       var data = {
         poitem: item,
         quan: quan,
+        uprice:uprice,
+        price: price,
         podate: podate,
         supplier: supplier
       };
@@ -340,7 +357,7 @@
         itemQuan = quan;
       }
     });
-    var totalQuantity = parseInt(itemQuan) + parseInt(quantity);
+    var totalQuantity = (parseInt(itemQuan))+(parseInt(quantity));
     var data = {
       id: id,
       quan: totalQuantity
@@ -393,12 +410,14 @@
         var id = d.poid;
         var poitem = d.itid;
         var quan = d.poQuantity;
+        var uprice = d.poUnitPrice;
         var podate = d.poDate;
         var supplier = d.supid;
 
         $("#id").val(id);
         $("#poitem").val(poitem);
         $("#txtquan").val(quan);
+        $("#uprice").val(uprice);
         $("#pre_quan").val(quan);
         $("#podate").val(podate);
         $("#supplier").val(supplier);
@@ -416,14 +435,20 @@
       var podate = $("#podate").val();
       var supplier = $("#supplier").val();
       var quan = $("#txtquan").val();
-      var pre_quan = $("#pre_quan").val();
-      
-      var update_quan = parseInt(quan) - parseInt(pre_quan);
+      var uprice = $("#uprice").val();
+      var pre_quan = $("#pre_quan").val(); 
+
+      var update_quan = (parseInt(quan))-(parseInt(pre_quan));
       console.log(update_quan, quan, pre_quan);
+
+      var price = (parseInt(quan))*(parseInt(uprice));
+
       var poData = {
         id: id,
         poitem: item,
         quan: quan,
+        uprice:uprice,
+        price: price,
         podate: podate,
         supplier: supplier,
       };
