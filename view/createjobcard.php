@@ -407,6 +407,7 @@
 
 	function getEmployee(id) {
 		var tname = null
+		var Data = null
 		$.ajax({
 			async: false,
 			type: "POST",
@@ -419,12 +420,14 @@
 					var d = data[0];
 					var fname = d.tFname;
 					var lname = d.tLname;
+					var email = d.tEmail;
 					tname = fname + " " + lname;
+					Data = {'email': email, 'name': tname};
 				}
 			},
 			dataType: 'json'
 		});
-		return tname;
+		return Data;
 	}
 
 	function getAllEmployeeData() {
@@ -497,17 +500,19 @@
 	// Notification Creating
 	function createNotification(tid, ordid) {
 		let title = "Work Assigned";
-		let category = "jobcard";
-		let name = getEmployee(tid);
-		let email = "";
-		let message = name + " is assigned to oversee the order Id - " + ordid;
+		let category = "jobcard notification";
+		let Data = getEmployee(tid);
+		let name = Data.name;
+		let email = Data.email;
+		let recieverid = tid;
+		let message = name + " is assigned to oversee the <a role='button' data-toggle='modal' data-target='.bs-measurement' onclick='getOrder(" + ordid +")'>order Id - " + ordid +"</a>";
 
 		var empData = {
 			title: title,
 			message: message,
 			category: category,
-			type: 1,
-			reciever: name,
+			type: 'employee',
+			reciever: recieverid,
 			email: email,
 		};
 

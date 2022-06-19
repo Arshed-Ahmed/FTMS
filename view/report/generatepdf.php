@@ -175,7 +175,7 @@ if($type == '2'){
         $pdf -> Cell(26, 7 , $id, 1, 0, 'C', 0);
         $pdf -> Cell(65, 7 , $name, 1, 0, 'L', 0);
         $pdf -> Cell(30, 7 , $nic, 1, 0, 'L', 0);
-        $pdf -> Cell(68, 7 , $salary, 1, 0, 'R', 0);
+        $pdf -> Cell(68, 7 , "Rs.".$salary, 1, 0, 'R', 0);
     }
 }else{
     $pdf->Ln(35);

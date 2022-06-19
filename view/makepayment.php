@@ -193,10 +193,10 @@
           </div>
           
           <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="remarks">Remarks <span class="required">*</span>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="remarks">Remarks
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="remarks" required="required" name="remarks" class="form-control col-md-7 col-xs-12"></textarea>
+              <textarea id="remarks" name="remarks" class="form-control col-md-7 col-xs-12"></textarea>
             </div>
           </div>
 
@@ -248,6 +248,7 @@
     loadMakePData();
   });
   let porder = [];
+  
   function payType(){
     // var type = $('#paytype').find('option:selected').val();
     var type = document.querySelector('input[name="paytype"]:checked').value;
@@ -397,9 +398,9 @@
               <td> ' + ordername + '</td>\
               <td> ' + paydate + '  </td>\
               <td> ' + payamount + '  </td>\
+              <td> ' + paytype + '  </td>\
               <td> ' + paidamount + '  </td>\
               <td> ' + paybalance + '  </td>\
-              <td> ' + paytype + '  </td>\
               <td> ' + invid + '  </td>\
               <td> ' + remarks + '  </td>\
               <td>\
@@ -473,8 +474,6 @@
 
 
   function getMakeP(id) {
-    // $("#profile-tab").tab("show");
-    // $("#profile-tab").html("Update Payment");
     $.ajax({
       type: "POST",
       url: '../server.php?c=MakePController&m=getMakeP',
@@ -516,7 +515,7 @@
         $("#invid").val(invid);
         $("#remarks").val(remarks); 
 
-        payType
+        payType();
       },
       dataType: 'json'
     });

@@ -426,7 +426,7 @@
 																	</div>
 																</div>
 																<div class="item form-group">
-																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="discount">Discount </label>
+																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="discount">Advance/ Discount </label>
 																	<div class="col-md-6 col-sm-6 col-xs-12">
 																		<input id="discount" class="form-control col-md-7 col-xs-12" name="discount" type="text">
 																	</div>
@@ -435,22 +435,14 @@
 																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fdate">Fit-on Date
 																	</label>
 																	<div class="col-md-6 col-sm-6 col-xs-12">
-																		<div class="form-group">
-																			<div class="input-group date" id="myDatepicker1">
-																				<input id="fdate" name="fdate" type="date" class="form-control">
-																			</div>
-																		</div>
+																		<input id="fdate" name="fdate" type="date" class="form-control">
 																	</div>
 																</div>
 																<div class="item form-group">
 																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddate">Delivery Date <span class="required">*</span>
 																	</label>
 																	<div class="col-md-6 col-sm-6 col-xs-12">
-																		<div class="form-group">
-																			<div class="input-group date" id="myDatepicker2">
-																				<input id="ddate" name="ddate" type="date" class="form-control" required="required">
-																			</div>
-																		</div>
+																		<input id="ddate" name="ddate" type="date" class="form-control" required="required">
 																	</div>
 																</div>
 																<div class="item form-group">

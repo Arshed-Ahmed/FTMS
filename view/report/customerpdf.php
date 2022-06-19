@@ -1,6 +1,6 @@
 <?php
 ini_set('memory_limit', '1024M');
-require 'db_conn.php';
+require '../db_conn.php';
 require_once('TCPDF-main/tcpdf.php');
 
 // if(isset($_POST['create_report'])) {
@@ -100,126 +100,48 @@ $pdf->SetFont('dejavusans', '', 14, '', true);
 // Add a page
 // This method has several options, check the source code documentation for more information.
 $pdf->AddPage();
-if($type == '2'){
-    $pdf->Ln(35);
-    $pdf->SetFont('dejavusans', '', 12, '', true);
-    $pdf -> Cell(189, 5 , 'Employee Attendence', 0, 0, 'C');
-    $pdf->Ln(15);
-    $pdf->SetFont('dejavusans', '', 11, '', true);
-    $pdf -> SetFillColor(224,225,225);
-    $pdf -> Cell(10, 7 , 'Id', 1, 0, 'C', 1);
-    $pdf -> Cell(35, 7 , 'Full Name', 1, 0, 'C', 1);
-    $pdf -> Cell(30, 7 , 'NIC', 1, 0, 'C', 1);
-    $pdf -> Cell(23, 7 , 'Phone', 1, 0, 'C', 1);
-    $pdf -> Cell(56, 7 , 'Email', 1, 0, 'C', 1);
-    $pdf -> Cell(35, 7 , 'Started Date', 1, 0, 'C', 1);
 
-    $i = 1;
-    $max = 20;
+$pdf->Ln(35);
+$pdf->SetFont('dejavusans', '', 12, '', true);
+$pdf -> Cell(189, 5 , 'Customer Information', 0, 0, 'C');
+$pdf->Ln(15);
+$pdf->SetFont('dejavusans', '', 11, '', true);
+$pdf -> SetFillColor(224,225,225);
+$pdf -> Cell(10, 10 , 'Id', 1, 0, 'C', 1);
+$pdf -> Cell(35, 10 , 'Full Name', 1, 0, 'C', 1);
+$pdf -> Cell(30, 10 , 'NIC', 1, 0, 'C', 1);
+$pdf -> Cell(23, 10 , 'Phone', 1, 0, 'C', 1);
+$pdf -> Cell(58, 10 , 'Email', 1, 0, 'C', 1);
+$pdf -> Cell(35, 10 , 'Address', 1, 0, 'C', 1);
 
-    while( $row = mysqli_fetch_array($res) ){
+$i = 1;
+$max = 15; 
 
-        $id = $row['tid'];
-        $fname = $row['tFname'];
-        $lname = $row['tLname'];
-        $name = $fname." ".$lname;
-        $nic = $row['tNIC'];
-        $Pno = $row['tPno'];
-        $email = $row['tEmail'];
-        $address = $row['tAddress'];
-        $startdate = $row['tStartdate'];
-        $salary = $row['tSalary'];
-        $category = $row['tcatId'];
-        $status = $row['tstatus'];
+while( $row = mysqli_fetch_array($res) ){
 
-        $pdf->Ln(7);
-        $pdf -> Cell(10, 7 , $id, 1, 0, 'C', 0);
-        $pdf -> Cell(35, 7 , $name, 1, 0, 'L', 0);
-        $pdf -> Cell(30, 7 , $nic, 1, 0, 'L', 0);
-        $pdf -> Cell(23, 7 , $Pno, 1, 0, 'L', 0);
-        $pdf -> Cell(56, 7 , $email, 1, 0, 'L', 0);
-        $pdf -> Cell(35, 7 , $startdate, 1, 0, 'L', 0);
-    }
-}else if($type == '3'){
-    $pdf->Ln(35);
-    $pdf->SetFont('dejavusans', '', 12, '', true);
-    $pdf -> Cell(189, 5 , 'Employee Salary', 0, 0, 'C');
-    $pdf->Ln(15);
-    $pdf->SetFont('dejavusans', '', 11, '', true);
-    $pdf -> SetFillColor(224,225,225);
-    $pdf -> Cell(26, 7 , 'Id', 1, 0, 'C', 1);
-    $pdf -> Cell(65, 7 , 'Full Name', 1, 0, 'C', 1);
-    $pdf -> Cell(30, 7 , 'NIC', 1, 0, 'C', 1);
-    $pdf -> Cell(68, 7 , 'Salary', 1, 0, 'C', 1);
+    $id = $row['cusid'];
+    $fname = $row['cusFname'];
+    $lname = $row['cusLname'];
+    $name = $fname." ".$lname;
+    $nic = $row['cusNIC'];
+    $Pno = $row['cusPno'];
+    $email = $row['cusEmail'];
+    $address = $row['cusAddress'];
 
-    $i = 1;
-    $max = 20;
 
-    while( $row = mysqli_fetch_array($res) ){
+    $pdf->Ln(10);
+    $pdf -> Cell(10, 10 , $id, 1, 0, 'C', 0);
+    $pdf -> Cell(35, 10 , $name, 1, 0, 'L', 0);
+    $pdf -> Cell(30, 10 , $nic, 1, 0, 'L', 0);
+    $pdf -> Cell(23, 10 , $Pno, 1, 0, 'L', 0);
+    $pdf -> MultiCell(58, 10 , $email, 1, 'L',0, 0);
+    $pdf -> Cell(35, 10 , $address, 1, 0, 'L', 0);
 
-        $id = $row['tid'];
-        $fname = $row['tFname'];
-        $lname = $row['tLname'];
-        $name = $fname." ".$lname;
-        $nic = $row['tNIC'];
-        $Pno = $row['tPno'];
-        $email = $row['tEmail'];
-        $address = $row['tAddress'];
-        $startdate = $row['tStartdate'];
-        $salary = $row['tSalary'];
-        $category = $row['tcatId'];
-        $status = $row['tstatus'];
-
-        $pdf->Ln(7);
-        $pdf -> Cell(26, 7 , $id, 1, 0, 'C', 0);
-        $pdf -> Cell(65, 7 , $name, 1, 0, 'L', 0);
-        $pdf -> Cell(30, 7 , $nic, 1, 0, 'L', 0);
-        $pdf -> Cell(68, 7 , $salary, 1, 0, 'R', 0);
-    }
-}else{
-    $pdf->Ln(35);
-    $pdf->SetFont('dejavusans', '', 12, '', true);
-    $pdf -> Cell(189, 5 , 'Employee Report', 0, 0, 'C');
-    $pdf->Ln(15);
-    $pdf->SetFont('dejavusans', '', 11, '', true);
-    $pdf -> SetFillColor(224,225,225);
-    $pdf -> Cell(10, 7 , 'Id', 1, 0, 'C', 1);
-    $pdf -> Cell(35, 7 , 'Full Name', 1, 0, 'C', 1);
-    $pdf -> Cell(30, 7 , 'NIC', 1, 0, 'C', 1);
-    $pdf -> Cell(23, 7 , 'Phone', 1, 0, 'C', 1);
-    $pdf -> Cell(56, 7 , 'Email', 1, 0, 'C', 1);
-    $pdf -> Cell(35, 7 , 'Started Date', 1, 0, 'C', 1);
-
-    $i = 1;
-    $max = 20;
-
-    while( $row = mysqli_fetch_array($res) ){
-
-        $id = $row['tid'];
-        $fname = $row['tFname'];
-        $lname = $row['tLname'];
-        $name = $fname." ".$lname;
-        $nic = $row['tNIC'];
-        $Pno = $row['tPno'];
-        $email = $row['tEmail'];
-        $address = $row['tAddress'];
-        $startdate = $row['tStartdate'];
-        $salary = $row['tSalary'];
-        $category = $row['tcatId'];
-        $status = $row['tstatus'];
-
-        $pdf->Ln(7);
-        $pdf -> Cell(10, 7 , $id, 1, 0, 'C', 0);
-        $pdf -> Cell(35, 7 , $name, 1, 0, 'L', 0);
-        $pdf -> Cell(30, 7 , $nic, 1, 0, 'L', 0);
-        $pdf -> Cell(23, 7 , $Pno, 1, 0, 'L', 0);
-        $pdf -> Cell(56, 7 , $email, 1, 0, 'L', 0);
-        $pdf -> Cell(35, 7 , $startdate, 1, 0, 'L', 0);
-
-    }
+    // MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0)
+    // $pdf -> MultiCell(35, 10 , $address, 1, 'L',0, 0);
 }
 
 // Close and output PDF document
-$pdf->Output('Employees_001', 'I');
+$pdf->Output('Customers_001', 'I');
 
 

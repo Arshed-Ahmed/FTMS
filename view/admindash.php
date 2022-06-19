@@ -161,7 +161,7 @@
         <div class="col-md-7 col-sm-6 col-xs-12" >
           <div class="x_panel">
             <div class="x_title">
-              <h2>Calender<small>Events</small></h2>
+              <h2>Finished Order<small>Customer List</small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li>
                   <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -169,7 +169,52 @@
               </ul>
               <div class="clearfix"></div>
             </div>
-            <div class="x_content" id='calendar'></div>
+            <div class="x_content" >
+              <?php
+                  include("db_conn.php");
+                  $sql = "SELECT * FROM `ordertbl` WHERE Display = '0' AND ordProgress = '1' ORDER BY `updateDate` DESC LIMIT 3";
+                  $res = mysqli_query($conn, $sql);
+                  if (mysqli_num_rows($res) > 0) {
+                    while ($order= mysqli_fetch_assoc($res)) {
+                      $id=$order['ordid'];
+                      $cusid=$order['cusid'];
+                      $cusname=$order['cusName'];
+                      $orddate=$order['ordDate'];
+                      $updatedate=$order['updateDate'];
+                      $deliverydate=$order['deliveryDate'];
+                      $desc=$order['ordDescription'];
+              ?>
+              <ul class="list-unstyled timeline">
+                <li>
+                  <div class="block">
+                    <div class="tags" style="width: 90px;">
+                      <a href="newnotification.php" class="tag">
+                        <span><?= $updatedate ?></span>
+                      </a>
+                    </div>
+                    <div class="block_content">
+                      <h2 class="title">
+                          <a>Order Complete for Cutomer <?= $cusname ?> </a>
+                      </h2>
+                      <div class="byline">
+                        <span>with ID <?= $cusid ?></span> Ordered on <a><?= $orddate ?></a>
+                      </div>
+                      <p class="excerpt">
+                        The delivery date is:<?= $deliverydate ?> <br />
+                        <?= $desc ?><br />
+                        <strong>
+                          <a href="newnotification.php">Inform&nbsp;Customer</a>
+                        </strong>
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <?php
+                  }
+                }
+              ?>
+            </div>
           </div>
         </div>
         <div class="col-md-5 col-sm-6 col-xs-12" style="height: 100%">
@@ -183,104 +228,17 @@
               </ul>
               <div class="clearfix"></div>
             </div>
-            <!-- <div class="x_content">
-              <div id="echart_donut" style="height: 350px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background-color: transparent;" _echarts_instance_="ec_1566537227881">
-                <div style="position: relative; overflow: hidden; width: 358px; height: 350px; cursor: default;">
-                  <canvas width="447" height="437" 
-                    data-zr-dom-id="zr_0" 
-                    style="position: absolute; left: 0px; top: 0px; width: 358px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                  >
-                  </canvas>
-                </div>
-                <div>
-                </div>
-              </div>
-
-            </div> -->
             <div class="x_content">
                 <canvas  id="pieChart" ></canvas>
             </div>
           </div>
         </div>
-        <!-- calendar modal -->
-        <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
-              </div>
-              <div class="modal-body">
-                <div id="testmodal" style="padding: 5px 20px;">
-                  <form id="antoform" class="form-horizontal calender" role="form">
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Title</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" id="title" name="title">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Description</label>
-                      <div class="col-sm-9">
-                        <textarea class="form-control" style="height:55px;" id="descr" name="descr"></textarea>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary antosubmit">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
-              </div>
-              <div class="modal-body">
-
-                <div id="testmodal2" style="padding: 5px 20px;">
-                  <form id="antoform2" class="form-horizontal calender" role="form">
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Title</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" id="title2" name="title2">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Description</label>
-                      <div class="col-sm-9">
-                        <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
-                      </div>
-                    </div>
-
-                  </form>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
-        <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
-        <!-- /calendar modal -->
       </div>
       <div class="row">
         <div class="col-md-8 col-sm-6 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Monthly Sales<small>..</small></h2>
+              <h2>Monthly Order<small>..</small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -298,38 +256,8 @@
               </ul>
               <div class="clearfix"></div>
             </div>
-            <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
-              <canvas id="lineChart" height="355" width="710" style="width: 568px; height: 284px;"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12" style="height: 100%">
-          <div class="x_panel">
-            <div class="x_title">
-              <h2>Order types<small>Sales Percentage</small></h2>
-              <ul class="nav navbar-right panel_toolbox">
-                <li>
-                  <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-              </ul>
-              <div class="clearfix"></div>
-            </div>
-            <!-- <div class="x_content">
-              <div id="echart_donut" style="height: 350px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background-color: transparent;" _echarts_instance_="ec_1566537227881">
-                <div style="position: relative; overflow: hidden; width: 358px; height: 350px; cursor: default;">
-                  <canvas width="447" height="437" 
-                    data-zr-dom-id="zr_0" 
-                    style="position: absolute; left: 0px; top: 0px; width: 358px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                  >
-                  </canvas>
-                </div>
-                <div>
-                </div>
-              </div>
-
-            </div> -->
             <div class="x_content">
-                <div  id="pieHoleChart" style=" height: 500px;"></div>
+              <canvas id="lineChart"></canvas>
             </div>
           </div>
         </div>
@@ -350,8 +278,43 @@
 </script>
 
 <script>
+  var AllOrders = 0;
+  var Pending = 0;
+  var Finished = 0;
+  $.ajax({
+    async:false,
+    url: '../server.php?c=OrderController&m=getAllOrder',
+    type: "POST",
+    dataType: "json",
+    success: function(data) {
+      var table = $('#ordertable').DataTable();
+      $("#ordertable tbody").empty();
+      table.destroy();
+      for (i = 0; i < data.length; i++) {
+        var id = data[i].ordid;
+        var cusname = data[i].cusName;
+        var styleid = data[i].styleId;
+        var fitondate = data[i].fitonDate;
+        var deliverydate = data[i].deliveryDate;
+        var price = data[i].ordPrice;
+        var discount = data[i].ordDiscount;
+        var totalprice = price - discount;
+        var description = data[i].ordDescription;
+        var measid = data[i].measId;
+        var progress = data[i].ordProgress;
+
+        if (progress == 0) {
+          Pending++;
+        } else {
+          Finished++;
+        }
+
+        AllOrders++
+      }
+    }
+  });
   var xValues = ["All Orders", "Pending", "Finished"];
-  var yValues = [2, 1, 1];
+  var yValues = [AllOrders, Pending, Finished];
   var barColors = [
     "#b91d47",
     "#00aba9",
@@ -367,7 +330,7 @@
         data: yValues
       }]
     },
-    options: {
+    options: { 
       title: {
         display: false,
         text: "World Wide Wine Production 2018"
@@ -376,24 +339,172 @@
   });
 
 </script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
+  var AllOrders = [0,0,0,0,0,0,0,0,0,0,0,0];
+  var Pending = [0,0,0,0,0,0,0,0,0,0,0,0];
+  var Finished = [0,0,0,0,0,0,0,0,0,0,0,0];
+  $.ajax({
+    async:false,
+    url: '../server.php?c=OrderController&m=getAllOrder',
+    type: "POST",
+    dataType: "json",
+    success: function(data) {
+      var table = $('#ordertable').DataTable();
+      $("#ordertable tbody").empty();
+      table.destroy();
+      for (i = 0; i < data.length; i++) {
+        var id = data[i].ordid;
+        var cusname = data[i].cusName;
+        var styleid = data[i].styleId;
+        var ordDate = data[i].ordDate;
+        var fitondate = data[i].fitonDate;
+        var deliverydate = data[i].deliveryDate;
+        var price = data[i].ordPrice;
+        var discount = data[i].ordDiscount;
+        var totalprice = price - discount;
+        var description = data[i].ordDescription;
+        var measid = data[i].measId;
+        var progress = data[i].ordProgress;
 
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['All Orders', 2],
-      ['Pending Orders', 1],
-      ['Finished Orders', 1],
-    ]);
+        var dt = new Date(ordDate);
+        switch (dt.getMonth()) {
+          case 0:
+            if (progress == 0) {
+              Pending[0]++;
+            } else {
+              Finished[0]++;
+            };
+            AllOrders[0]++
+            break;
+          case 1:
+            if (progress == 0) {
+              Pending[1]++;
+            } else {
+              Finished[1]++;
+            };
+            AllOrders[1]++
+            break;
+            break;
+          case 2:
+            if (progress == 0) {
+              Pending[2]++;
+            } else {
+              Finished[2]++;
+            };
+            AllOrders[2]++
+            break;
+            break;
+          case 3:
+            if (progress == 0) {
+              Pending[3]++;
+            } else {
+              Finished[3]++;
+            };
+            AllOrders[3]++
+            break;
+            break;
+          case 4:
+            if (progress == 0) {
+              Pending[4]++;
+            } else {
+              Finished[4]++;
+            };
+            AllOrders[4]++
+            break;
+            break;
+          case 5:
+            if (progress == 0) {
+              Pending[5]++;
+            } else {
+              Finished[5]++;
+            };
+            AllOrders[5]++
+            break;
+            break;
+          case  6:
+            if (progress == 0) {
+              Pending[6]++;
+            } else {
+              Finished[6]++;
+            };
+            AllOrders[6]++
+            break;
+            break;
+          case 7:
+            if (progress == 0) {
+              Pending[7]++;
+            } else {
+              Finished[7]++;
+            };
+            AllOrders[7]++
+            break;
+            break;
+          case 8:
+            if (progress == 0) {
+              Pending[8]++;
+            } else {
+              Finished[8]++;
+            };
+            AllOrders[8]++
+            break;
+            break;
+          case 9:
+            if (progress == 0) {
+              Pending[9]++;
+            } else {
+              Finished[9]++;
+            };
+            AllOrders[9]++
+            break;
+            break;
+          case 10:
+            if (progress == 0) {
+              Pending[10]++;
+            } else {
+              Finished[10]++;
+            };
+            AllOrders[10]++
+            break;
+            break;
+          case 11:
+            if (progress == 0) {
+              Pending[11]++;
+            } else {
+              Finished[11]++;
+            };
+            AllOrders[11]++
+            break;
+        }
+      }
+    }
+  });
+  console.log(AllOrders, Pending, Finished);
+var xValues = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    var options = {
-      title:'World Wide Wine Production',
-      pieHole: 0.7,
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('pieHoleChart'));
-    chart.draw(data, options);
+new Chart("lineChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{ 
+      data: [...Finished],
+      borderColor: "red",
+      fill: false,
+      label: 'Finished Orders',
+    }, { 
+      data: [...AllOrders],
+      borderColor: "green",
+      fill: false,
+      label: 'All Orders',
+    }, { 
+      data: [...Pending],
+      borderColor: "blue",
+      fill: false,
+      label: 'Pending Orders',
+    }]
+  },
+  options: {
+    legend: {display: true}
   }
+});
 </script>

@@ -214,8 +214,7 @@
       data: {'id':id},
       success:
       function (data){
-        // alert(data);
-        var td='';
+        $("#UserInfoView tbody").empty();
 
           var d=data[0];
           var id = d.id;

@@ -29,7 +29,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ordid">Order Id<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select id="ordid" class="select2_single form-control" tabindex="-1" required="required" >
+              <select id="ordid" class="select2_single form-control" tabindex="-1" required="required" onchange="setPrice();">
                 <option value="">Select an option</option>
               </select>
             </div>
@@ -53,7 +53,7 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtsalary">Payment Amount <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="amount" name="amount" required="required" class="form-control col-md-7 col-xs-12" onchange="Balance();" >
+              <input type="text" id="amount" name="amount" required="required" class="form-control col-md-7 col-xs-12" onchange="Balance();" />
             </div>
           </div>
           
@@ -186,10 +186,10 @@
           </div>
           
           <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="remarks">Remarks <span class="required">*</span>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="remarks">Remarks
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="remarks" required="required" name="remarks" class="form-control col-md-7 col-xs-12"></textarea>
+              <textarea id="remarks" name="remarks" class="form-control col-md-7 col-xs-12"></textarea>
             </div>
           </div>
 
@@ -202,6 +202,11 @@
             </div>
           </div>
           <div class="ln_solid"></div>
+        </form>
+
+        <form id="genInv" method="post" name="invoice_pdf" action="report/invoice.php" target="_blank" class="invisible">
+          <input id="payid_inv" name="payid_inv" type="text" class="invisible form-control col-md-7 col-xs-12">
+          <input id="invid_inv" name="invid_inv" type="text" class="invisible form-control col-md-7 col-xs-12">
         </form>
 
         <table id="rptable" class="table table-striped table-bordered">
@@ -305,7 +310,7 @@
     var balance = parseInt(pamount) - parseInt(amount);
     $('#balance').val(balance);
   }
-  
+
   function loadOrderData() {
 		$.ajax({
       async: false,
@@ -333,14 +338,45 @@
 					}
 
           order[id] = 'Order ID' + id + ' - ' + cusname;
-          
 
 					var orderSelect = '<option value="' + id + '">Order ID' + id + ' - ' + cusname + '</option>';
 					$("#ordid").append(orderSelect);
+					$("#amount").val();
 				}
 			}
 		});
 	}
+
+  function setPrice(){
+    var id = $('#ordid').find('option:selected').val();
+    $.ajax({
+      async: false,
+			url: '../server.php?c=OrderController&m=getOrder',
+			type: "POST",
+      data: {
+        'id': id
+      },
+			success: function(data) {
+        // alert(data);
+        var d = data[0];
+        var id = d.ordid;
+        var cusid = d.cusid;
+        var cusname = d.cusName;
+        var styleid = d.styleId;
+        var fitondate = d.fitonDate;
+        var deliverydate = d.deliveryDate;
+        var price = d.ordPrice;
+        var discount = d.ordDiscount;
+        var description = d.ordDescription;
+        var progress = d.ordProgress;
+
+        var totalprice = (parseInt(price))-(parseInt(discount));
+        $('#amount').val(totalprice);
+
+      },
+			dataType: "json",
+    });
+  }
 
   //Load RP data function  
   function loadRPData() {
@@ -365,8 +401,9 @@
           var paybalance = data[i].paybalance;
           var paytype = data[i].paytype;
           var remarks = data[i].remarks;
+          var invoiceid = data[i].invid
           var invid;
-          if (data[i].invid == 0) {
+          if ( invoiceid == 0) {
             invid = "Invoice not generated yet";
           } else {
             invid = data[i].invid;
@@ -374,7 +411,7 @@
 
           var ordername = order[ordid];
           
-          var func_invGen = 'invGen(' + id +','+ ordid +')';
+          var func_invGen = 'invGen('+ id +','+ ordid +','+ invoiceid +')';
           var func_edit = 'getRP(' + id + ')';
           var func_delete = 'deleteRP(' + id + ')';
 
@@ -384,9 +421,9 @@
               <td> ' + ordername + '</td>\
               <td> ' + paydate + '  </td>\
               <td> ' + payamount + '  </td>\
+              <td> ' + paytype + '  </td>\
               <td> ' + paidamount + '  </td>\
               <td> ' + paybalance + '  </td>\
-              <td> ' + paytype + '  </td>\
               <td> ' + invid + '  </td>\
               <td> ' + remarks + '  </td>\
               <td>\
@@ -457,7 +494,11 @@
 
   }
 
-  function invGen(payid, ordid) {
+  function invGen(payid, ordid, invid) {
+    if(invid != 0){
+      generateInvoice(payid, invid);
+      return;
+    }
     var Data = {
       payid: payid,
       ordid: ordid
@@ -478,7 +519,7 @@
         } 
         updateInvoice(payid, id);
       },
-      dataType: 'json'
+      dataType: 'json',
     });
 
   }
@@ -489,20 +530,28 @@
       invid: invid
     };
     $.ajax({
+      async: false,
       type: "POST",
       url: '../server.php?c=RPController&m=updateInvoice',
       data:Data,
       dataType: 'json',
       success: function(data) {
+        let paymid, id;
+        for (i = 0; i < data.length; i++) {
+          var d = data[0];
+          id = d.invid;
+          var ordid = d.ordid;
+          paymid = d.payid;
+          var invdate = d.invdate;
+        } 
           new PNotify({
             title: 'New Invoice',
-            text: "Invoice "+data + "\'s payment is susscessfully added.",
+            text: "Invoice "+ data + "\'s payment is susscessfully added.",
             type: 'success',
             styling: 'bootstrap3'
           });
           loadRPData();
-          generateInvoice(invid, payid);
-        
+          generateInvoice(paymid, id);
       },
       error: function(errormessage) {
         alert(errormessage.responseText);
@@ -512,36 +561,24 @@
   }
 
   function generateInvoice(payid, invid) { 
-    var Data = {
-      payid: payid,
-      invid: invid
-    };
-    $.ajax({
-      type: "POST",
-      url: 'reports/paymentInvoice.php',
-      data:Data,
-      dataType: 'json',
-      success: function(data) {
-          new PNotify({
-            title: 'New Invoice',
-            text: "Invoice "+data + "\'s payment is susscessfully added.",
-            type: 'success',
-            styling: 'bootstrap3'
-          });
-          loadRPData();
-          generateInvoice(invid, payid);
-        
-      },
-      error: function(errormessage) {
-        alert(errormessage.responseText);
-        alert("Unable to add RP");
-      },
+    $('#genInv')[0].reset();
+
+    $("#payid_inv").val(payid);
+    $("#invid_inv").val(invid);
+    
+    $('#genInv').submit();
+    new PNotify({
+      title: 'New Invoice',
+      text: "Invoice "+invid + "\'s payment is susscessfully added.",
+      type: 'success',
+      styling: 'bootstrap3'
     });
+    setTimeout(function() {
+      location.reload()
+    }, 1500);
   }
 
   function getRP(id) {
-    // $("#profile-tab").tab("show");
-    // $("#profile-tab").html("Update Payment");
     $.ajax({
       type: "POST",
       url: '../server.php?c=RPController&m=getRP',
@@ -581,7 +618,7 @@
         $("#balance").val(balance);
         $("#remarks").val(remarks); 
 
-        payType
+        payType();
       },
       dataType: 'json'
     });

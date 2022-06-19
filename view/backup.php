@@ -1,15 +1,58 @@
 <?php include_once("../incl/header.php"); ?>
 <!-- page content -->
 <?php
-if (isset($_POST['submit'])) {
-	include("db_conn.php");
-	$filename = 'db_backup_' . date('G_a_m_d_y') . '.sql';
-	$query = "mysqldump ftms --password='' --user=root --single-transaction > '.$filename'";
-	$res = mysqli_query($conn, $sql);
+require_once("db_conn.php");
+
+$connect = new PDO("mysql:host=localhost;dbname=ftms", "root", "");
+$get_all_table_query = "SHOW TABLES";
+$statement = $connect->prepare($get_all_table_query);
+$statement->execute();
+$result = $statement->fetchAll();
+
+if(isset($_POST['backup'])){
+	$output = '';
+	foreach($result as $table) {
+		$show_table_query = "SHOW CREATE TABLE " . $table . "";
+		$statement = $connect->prepare($show_table_query);
+		$statement->execute();
+		$show_table_result = $statement->fetchAll();
+
+		foreach($show_table_result as $show_table_row){
+			$output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
+		}
+		$select_query = "SELECT * FROM " . $table . "";
+		$statement = $connect->prepare($select_query);
+		$statement->execute();
+		$total_row = $statement->rowCount();
+
+		for($count=0; $count<$total_row; $count++) {
+			$single_result = $statement->fetch(PDO::FETCH_ASSOC);
+			$table_column_array = array_keys($single_result);
+			$table_value_array = array_values($single_result);
+			$output .= "\nINSERT INTO $table (";
+			$output .= "" . implode(", ", $table_column_array) . ") VALUES (";
+			$output .= "'" . implode("','", $table_value_array) . "');\n";
+		}
+	}
+	$file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
+	$file_handle = fopen($file_name, 'w+');
+	fwrite($file_handle, $output);
+	fclose($file_handle);
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename=' . basename($file_name));
+	header('Content-Transfer-Encoding: binary');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file_name));
+    ob_clean();
+    flush();
+    readfile($file_name);
+    unlink($file_name);
 }
 
 ?>
-
 
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
@@ -19,16 +62,22 @@ if (isset($_POST['submit'])) {
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form method="POST">
-					<div class="item form-group" style="height: 50px"></div>
+				<form method="post" id="export_form">
+					<div class="item form-group" style="height: 50px">
+          				<input id="table" name="table" value="true" type="text" class="invisible form-control col-md-7 col-xs-12">
+					</div>
+					<div class="checkbox item form-group">
+						<label><input type="checkbox" class="checkbox_table" name="table[]" value="true" /> All Table</label>
+					</div>
 					<div class="item form-group" style="height: 100px">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="advance">Take a Backup copy </label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="backup">Take a Backup copy </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<a role="button" class="btn btn-info btn-xs" name="submit" onclick="Backup();"><i class="fa fa-cloud-download"></i> Backup </a>
+							<!-- <button class="btn btn-info btn-xs" name="submit" onclick="Backup();" ><i class="fa fa-cloud-download"></i> Backup </button> -->
+							<!-- <button class="btn btn-info btn-xs" name="btnsubmit" id="btnsubmit" type="submit" ><i class="fa fa-cloud-download"></i> Backup </button> -->
+							<input type="submit" class="btn btn-info" value="Export" />
 						</div>
 					</div>
 				</form>
-
 
 				<p>Backup History</p>
 				<table id="backuptable" class="table table-striped table-bordered">
