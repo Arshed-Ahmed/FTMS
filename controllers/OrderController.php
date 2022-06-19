@@ -35,6 +35,13 @@ class OrderController
 		echo json_encode($result);
 	}
 
+	function getStyle(){
+		$id = $_POST['id'];
+		$model = new OrderModel();
+		$result = $model->getStyleById($id);
+		echo json_encode($result);
+	}
+
 	function getAllOrder(){
 		$model = new OrderModel();
 		$result = $model->getAllOrder();
@@ -60,9 +67,10 @@ class OrderController
 	function editProgress(){
 		$id = $_POST['ordid'];
         $progress = $_POST['progress'];
+        $updatedate = date('m/d/Y');
 
 		$model = new OrderModel();
-		$insertId = $model->editProgress($progress,$id);
+		$insertId = $model->editProgress($progress,$updatedate,$id);
 		echo json_encode($insertId);
 	}
 
