@@ -60,6 +60,18 @@ else
         </head>
         <body class="nav-md">
             <div class="container body">
-            <?php require_once('sidebar.php');?>
+            <?php
+                  $utype=$_SESSION["user"]["utype"];
+                  if($utype=="Admin")
+                  {
+                        require_once('sidebar.php');
+                        
+                  }
+                  else if($utype=="Tailor")
+                  {
+                        require_once('tailorsidebar.php');
+                        
+                  }
+            ?>
             <?php require_once('pagetop.php');?>
             
