@@ -16,12 +16,17 @@ class BackupModel
 
     function Backup()
     {
-        $filename = 'db_backup_' . date('G_a_m_d_y') . '.sql';
+        // $filename = 'db_backup_' . date('G_a_m_d_y') . '.sql';
 
-        $query = "mysqldump ftms --password='' --user=root --single-transaction > '.$filename'";
+        // $query = "mysqldump ftms --password='' --user=root --single-transaction > '.$filename'";
+        
+        $backup_file = 'ftms' . date("Y-m-d-H-i-s") . '.gz';
+        $command = "mysqldump --opt -h localhost -u root -p  ". "ftms | gzip > $backup_file";
 
-        $insertId = $this->db_handle->runBaseQuery($query);
-        return $insertId;
+        $back = system($command);
+
+        // $insertId = $this->db_handle->runBaseQuery($query);
+        return $back;
     }
 
     function addBackup($timeDate)

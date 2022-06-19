@@ -15,7 +15,7 @@ class NotiModel
     function addNoti($title, $reciever, $email, $type, $message, $asdate, $category)
     {
         $query = "INSERT INTO $this->table (notTitle, notReciever, notEmail, notType, notMessage, notDate, notCategory) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        $paramType = "sssisss";
+        $paramType = "sssssss";
         $paramValue = array(
             $title, $reciever, $email, $type, $message, $asdate, $category
         );
@@ -27,7 +27,7 @@ class NotiModel
     function editNoti($title, $reciever, $email, $type, $message, $asdate, $category, $id)
     {
         $query = "UPDATE $this->table SET notTitle = ?, notReciever = ?, notEmail = ?, notType = ?, notMessage = ?, notDate = ?, notCategory = ? WHERE notId = ?";
-        $paramType = "sssisssi";
+        $paramType = "sssssssi";
         $paramValue = array(
             $title, $reciever, $email, $type, $message, $asdate, $category, $id
         );

@@ -49,7 +49,10 @@ class RPModel
         );
 
         $insertId = $this->db_handle->update($query, $paramType, $paramValue);
-        return $invid;
+        
+        $sql = "SELECT * FROM `invoice` WHERE `invid` = (SELECT MAX(invid) FROM `invoice`)";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
     }
 
     function editRP($ordid, $pdate, $amount, $type, $pamount, $balance, $remarks, $id)

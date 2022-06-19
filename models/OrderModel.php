@@ -50,10 +50,11 @@ class OrderModel
         return $insertId;
     }
 
-    function editProgress($progress,$id) {
-        $query = "UPDATE $this->table SET ordProgress = ? WHERE ordid = ?";
-        $paramType = "ii";
+    function editProgress($progress,$updatedate,$id) {
+        $query = "UPDATE $this->table SET updateDate = ?, ordProgress = ? WHERE ordid = ?";
+        $paramType = "sii";
         $paramValue = array(
+            $updatedate,
             $progress,
             $id
         );
@@ -81,6 +82,18 @@ class OrderModel
         $result = $this->db_handle->runQuery($query, $paramType, $paramValue);
         return $result;
     }
+
+    function getStyleById($id) {
+        $query = "SELECT * FROM `style` WHERE stlid = ?";
+        $paramType = "i";
+        $paramValue = array(
+            $id
+        );
+
+        $result = $this->db_handle->runQuery($query, $paramType, $paramValue);
+        return $result;
+    }
+
     function getAllOrder() {
         $sql = "SELECT * FROM $this->table WHERE Display = '0' ORDER BY ordid";
         $result = $this->db_handle->runBaseQuery($sql);

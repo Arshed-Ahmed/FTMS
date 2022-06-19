@@ -25,7 +25,7 @@ class MakePModel
     }
 
 
-    function editMakeP($poid, $pdate, $amount, $type, $pamount, $invid, $balance, $remarks, $id)
+    function editMakeP($poid, $pdate, $amount, $type, $pamount, $balance, $invid, $remarks, $id)
     {
         $query = "UPDATE $this->table SET poid  = ?, paydate  = ?, payamount  = ?,paidamount  = ?,paybalance = ?, paytype  = ?, invid = ?, remarks = ? WHERE payid = ?";
         $paramType = "isssssssi";
