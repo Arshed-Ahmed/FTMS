@@ -17,12 +17,12 @@ class MakePController
 		$amount = $_POST['amount'];
 		$type = $_POST['type'];
 		$pamount = $_POST['pamount'];
-		$invid = $_POST['invid'];
 		$balance = $_POST['balance'];
+		$invid = $_POST['invid'];
 		$remarks = $_POST['remarks'];
 
 		$model = new MakePModel();
-		$insertId = $model->addMakeP($poid, $pdate, $amount, $type, $pamount, $invid, $balance, $remarks);
+		$insertId = $model->addMakeP($poid, $pdate, $amount, $type, $pamount, $balance, $invid, $remarks);
 		echo json_encode($insertId);
 	}
 
@@ -50,12 +50,12 @@ class MakePController
 		$amount = $_POST['amount'];
 		$type = $_POST['type'];
 		$pamount = $_POST['pamount'];
-		$invid = $_POST['invid'];
 		$balance = $_POST['balance'];
+		$invid = $_POST['invid'];
 		$remarks = $_POST['remarks'];
 
 		$model = new MakePModel();
-		$insertId = $model->editMakeP($poid, $pdate, $amount, $type, $pamount, $invid, $balance, $remarks, $id);
+		$insertId = $model->editMakeP($poid, $pdate, $amount, $type, $pamount, $balance, $invid, $remarks, $id);
 		echo json_encode($insertId);
 	}
 
