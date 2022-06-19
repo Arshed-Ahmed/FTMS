@@ -30,8 +30,10 @@
           <ul class="nav side-menu">
             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
-                <li><a href="../controllers/route.php">Dashboard</a></li>
-                <li><a href="../controllers/reportroute.php">Report</a></li>
+                <li><a href="../controllers/route.php">Dashboard</a>
+                </li>
+                <li><a href="../controllers/reportroute.php">Report</a>
+                </li>
               </ul>
             </li>
             <li><a><i class="fa fa-sliders"></i> Configuration <span class="fa fa-chevron-down"></span></a>
@@ -105,7 +107,7 @@
               <ul class="nav child_menu">
                 <li><a href="newnotification.php">New Notification</a></li>
                 <!-- <li><a href="notificationcategory.php">Notification Category</a></li> -->
-                <li><a href="notificationlist.php">Notification List</a></li>
+                <!-- <li><a href="notificationlist.php">Notification List</a></li> -->
               </ul>
             </li>
             <li><a><i class="fa fa-briefcase"></i> Work Management <span class="fa fa-chevron-down"></span></a>
@@ -183,61 +185,73 @@
           <li role="presentation" class="dropdown">
             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-green">6</span>
+              <span class="badge bg-green">
+               <?php
+                include("db_conn.php");
+                $sql2 = "SELECT * FROM `notification` WHERE Display = '0' ORDER BY `notId` DESC";
+                $res2 = mysqli_query($conn, $sql2);
+                $count = mysqli_num_rows($res2);
+                echo $count;
+              ?>
+              </span>
             </a>
             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
+              <?php
+                include("db_conn.php");
+                $sql = "SELECT * FROM `notification` WHERE Display = '0' ORDER BY `notId` DESC LIMIT 4";
+                $res = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($res) > 0) {
+                  while ($notice= mysqli_fetch_assoc($res)) { 
+                    $notid = $notice['notId'];
+                    $title = $notice['notTitle'];
+                    $recieverid = $notice['notReciever'];
+                    $email = $notice['notEmail'];
+                    $msg = $notice['notMessage'];
+                    $ntype = $notice['notType'];
+                    $notdate = $notice['notDate'];
+                    $cat = $notice['notCategory'];
+                    $status = $notice['notStatus'];
+                    $name;
+                    $sql1 = "SELECT * FROM `employee` WHERE tid='$recieverid'";
+                    $res1 = mysqli_query($conn, $sql1);
+                    $tailor= mysqli_fetch_assoc($res1);
+                    
+                    $sql3 = "SELECT * FROM `customer` WHERE cusid='$recieverid'";
+                    $res3 = mysqli_query($conn, $sql3);
+                    $customer= mysqli_fetch_assoc($res3);
+ 
+                    if($ntype=="customer"){
+                      $fname = $customer['cusFname'];
+                      $lname = $customer['cusLname'];
+                      $name = $fname." ".$lname;
+                    }
+                    if($ntype=="employee"){
+                      $fname = $tailor['tFname'];
+                      $lname = $tailor['tLname'];
+                      $name = $fname." ".$lname;
+                    }
+              ?>
+                <li>
+                  <a>
+                    <span class="image"><img src="../production/images/your-picture.png" alt="Profile Image" /></span>
+                    <span>
+                      <span><?= $name ?></span>
+                      <span class="time"><?= $notdate ?></span>
+                    </span>
+                    <span class="message">
+                      <?= $msg ?>
+                    </span>
+                  </a>
+                </li>
+              <?php
+                  }
+                }
+              ?>
               <li>
                 <div class="text-center">
-                  <a>
-                    <strong>See All Alerts</strong>
+                  <a href="newnotification.php">
+                    <strong>See All Notifications</strong>
                     <i class="fa fa-angle-right"></i>
                   </a>
                 </div>
