@@ -1,5 +1,6 @@
 <?php include_once("../incl/header.php");?>
 <!-- page content -->
+
 <style>
 	#msg > a{
 		color: black;
@@ -61,7 +62,7 @@
               <li>
                 <div class="block">
                   <div class="tags" style="width: 90px;">
-                    <a href="newnotification.php" class="tag">
+                    <a href="notificationlist.php" class="tag">
                       <span><?= $notdate ?></span>
                     </a>
                   </div>

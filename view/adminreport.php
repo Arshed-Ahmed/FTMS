@@ -68,6 +68,19 @@
             	  <input type="submit" name="create_report" class="btn btn-success" value="Generate Report">
               </div>
             </form>
+            <br /><br /><br />
+            <form method="post" name="tailor_order_form" action="report/tailorOrder.php" target="_blank">
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tailor-Order Report<span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select class="form-control"  id="tOrder" name="report_type" required>
+                    <option >Select Report Type</option>
+                    
+                  </select>
+                </div>
+            	  <input type="submit" name="create_report" class="btn btn-success" value="Generate Report">
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -81,6 +94,27 @@
   $(document).ready(function (){
         $('#title').text('Report');
         $('#breadcrumb').text('Reports');
-
+        getAllEmployeeData();
     });
+
+    function getAllEmployeeData() {
+		$.ajax({
+			async: false,
+			url: '../server.php?c=EmployeeController&m=getAllEmployee',
+			type: "POST",
+			dataType: "json",
+			success: function(data) {
+				for (i = 0; i < data.length; i++) {
+					var id = data[i].tid;
+					var fname = data[i].tFname;
+					var lname = data[i].tLname;
+					var empname = fname + " " + lname;
+					var empnames = '<option value="' + id + '">' + empname + '</option>';
+
+					$("#tOrder").append(empnames);
+				}
+			},
+			dataType: 'json'
+		});
+	}
 </script>

@@ -1,58 +1,75 @@
 <?php include_once("../incl/header.php"); ?>
 <!-- page content -->
 <?php
-require_once("db_conn.php");
+if(isset($_GET['backup'])){ 
+    $dbhost = $_SERVER['SERVER_NAME'];
+    $dbuser = 'root';
+    $dbpass = '';
+    $dbname = 'ftms';
+    $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+    $backupAlert = '';
+    $tables = array();
+    $result = mysqli_query($connection, "SHOW TABLES");
+    if (!$result) {
+        $backupAlert = 'Error found.<br/>ERROR : ' . mysqli_error($connection) . 'ERROR NO :' . mysqli_errno($connection);
+    } else {
+        while ($row = mysqli_fetch_row($result)) {
+            $tables[] = $row[0];
+        }
+        mysqli_free_result($result);
 
-$connect = new PDO("mysql:host=localhost;dbname=ftms", "root", "");
-$get_all_table_query = "SHOW TABLES";
-$statement = $connect->prepare($get_all_table_query);
-$statement->execute();
-$result = $statement->fetchAll();
+        $return = '';
+        foreach ($tables as $table) {
 
-if(isset($_POST['backup'])){
-	$output = '';
-	foreach($result as $table) {
-		$show_table_query = "SHOW CREATE TABLE " . $table . "";
-		$statement = $connect->prepare($show_table_query);
-		$statement->execute();
-		$show_table_result = $statement->fetchAll();
+            $result = mysqli_query($connection, "SELECT * FROM " . $table);
+            if (!$result) {
+                $backupAlert = 'Error found.<br/>ERROR : ' . mysqli_error($connection) . 'ERROR NO :' . mysqli_errno($connection);
+            } else {
+                $num_fields = mysqli_num_fields($result);
+                if (!$num_fields) {
+                    $backupAlert = 'Error found.<br/>ERROR : ' . mysqli_error($connection) . 'ERROR NO :' . mysqli_errno($connection);
+                } else {
+                    $return .= 'DROP TABLE ' . $table . ';';
+                    $row2 = mysqli_fetch_row(mysqli_query($connection, 'SHOW CREATE TABLE ' . $table));
+                    if (!$row2) {
+                        $backupAlert = 'Error found.<br/>ERROR : ' . mysqli_error($connection) . 'ERROR NO :' . mysqli_errno($connection);
+                    } else {
+                        $return .= "\n\n" . $row2[1] . ";\n\n";
+                        for ($i = 0; $i < $num_fields; $i++) {
+                            while ($row = mysqli_fetch_row($result)) {
+                                $return .= 'INSERT INTO ' . $table . ' VALUES(';
+                                for ($j = 0; $j < $num_fields; $j++) {
+                                    $row[$j] = addslashes($row[$j]);
+                                    if (isset($row[$j])) {
+                                        $return .= '"' . $row[$j] . '"';
+                                    } else {
+                                        $return .= '""';
+                                    }
+                                    if ($j < $num_fields - 1) {
+                                        $return .= ',';
+                                    }
+                                }
+                                $return .= ");\n";
+                            }
+                        }
+                        $return .= "\n\n\n";
+                    }
 
-		foreach($show_table_result as $show_table_row){
-			$output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
-		}
-		$select_query = "SELECT * FROM " . $table . "";
-		$statement = $connect->prepare($select_query);
-		$statement->execute();
-		$total_row = $statement->rowCount();
-
-		for($count=0; $count<$total_row; $count++) {
-			$single_result = $statement->fetch(PDO::FETCH_ASSOC);
-			$table_column_array = array_keys($single_result);
-			$table_value_array = array_values($single_result);
-			$output .= "\nINSERT INTO $table (";
-			$output .= "" . implode(", ", $table_column_array) . ") VALUES (";
-			$output .= "'" . implode("','", $table_value_array) . "');\n";
-		}
-	}
-	$file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
-	$file_handle = fopen($file_name, 'w+');
-	fwrite($file_handle, $output);
-	fclose($file_handle);
-	header('Content-Description: File Transfer');
-	header('Content-Type: application/octet-stream');
-	header('Content-Disposition: attachment; filename=' . basename($file_name));
-	header('Content-Transfer-Encoding: binary');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($file_name));
-    ob_clean();
-    flush();
-    readfile($file_name);
-    unlink($file_name);
+                    $backup_file = $dbname . date("Y-m-d-H-i-s") . '.sql';
+					$path = 'C:/Users/Arshe/Downloads/'; 
+					$handle = fopen("{$path}/{$backup_file}", 'w+'); 
+                    fwrite($handle, $return);
+                    fclose($handle);
+                    $backupAlert = 'Succesfully got the backup!';
+                }
+            }
+        }
+    }
+    echo '<script> alert("Succesfully got the backup!"); </script>';
 }
-
 ?>
+
+
 
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
@@ -62,19 +79,16 @@ if(isset($_POST['backup'])){
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form method="post" id="export_form">
+				<form method="post" id="export_form" action="backup.php?backup=true">
 					<div class="item form-group" style="height: 50px">
           				<input id="table" name="table" value="true" type="text" class="invisible form-control col-md-7 col-xs-12">
-					</div>
-					<div class="checkbox item form-group">
-						<label><input type="checkbox" class="checkbox_table" name="table[]" value="true" /> All Table</label>
 					</div>
 					<div class="item form-group" style="height: 100px">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="backup">Take a Backup copy </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<!-- <button class="btn btn-info btn-xs" name="submit" onclick="Backup();" ><i class="fa fa-cloud-download"></i> Backup </button> -->
-							<!-- <button class="btn btn-info btn-xs" name="btnsubmit" id="btnsubmit" type="submit" ><i class="fa fa-cloud-download"></i> Backup </button> -->
-							<input type="submit" class="btn btn-info" value="Export" />
+							<button class="btn btn-info btn-xs" name="btnsubmit" id="btnsubmit" type="submit" ><i class="fa fa-cloud-download"></i> Backup </button>
+							<!-- <input type="submit" class="btn btn-info" value="Export" /> -->
 						</div>
 					</div>
 				</form>
