@@ -155,14 +155,14 @@
 																			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtnic">NIC <span class="required">*</span>
 																			</label>
 																			<div class="col-md-6 col-sm-6 col-xs-12">
-																				<input id="txtnic" class="form-control col-md-7 col-xs-12" name="txtnic" placeholder="123456789V" required="required" type="text">
+																				<input id="txtnic" class="form-control col-md-7 col-xs-12" name="txtnic" placeholder="123456789V" required="required" type="text" onblur="validateNIC(this.value, 'warning');">
 																			</div>
 																		</div>
 																		<div class="item form-group">
 																			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txttel">Telephone <span class="required">*</span>
 																			</label>
 																			<div class="col-md-6 col-sm-6 col-xs-12">
-																				<input type="tel" id="txttel" name="txttel" required="required" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+																				<input type="tel" id="txttel" name="txttel" required="required" data-validate-length-range="8,20" onblur="validateMobileNumber(this.value, 'warning');" class="form-control col-md-7 col-xs-12">
 																			</div>
 																		</div>
 																		<div class="item form-group">
@@ -381,7 +381,37 @@
 																	</label>
 																	<div class="col-md-6 col-sm-6 col-xs-12">
 																		<textarea id="txtmeasurement" required="required" name="txtmeasurement" class="form-control col-md-7 col-xs-12" rows="4"></textarea>
-																		<button id="selectMeasurement" name="selectMeasurement" type="button" class="btn btn-info" onclick="getMeasurement();">Add Old Measurement</button>
+																		<button id="selectMeasurement" name="selectMeasurement" type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-measurement" onclick="getMeasurementBycusId();">Add Old Measurement</button>
+																		<!-- Measurement large modal -->
+																		<div class="modal fade bs-measurement" tabindex="-1" role="dialog" aria-hidden="true">
+																			<div class="modal-dialog modal-lg">
+																				<div class="modal-content">
+																					<div class="modal-header">
+																						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+																						</button>
+																						<h4 class="modal-title" id="myModalLabel1">Select a measurements</h4>
+																					</div>
+																					<div class="modal-body">
+																						<table id="cusmeasurementtable" class="table table-bordered">
+																							<thead>
+																								<tr>
+																									<th>Customer Name</th>
+																									<th>Item</th>
+																									<th>Measurements</th>
+																									<th>More details</th>
+																									<th>Option</th>
+																								</tr>
+																							</thead>
+																							<tbody></tbody>
+																						</table>
+																					</div>
+																					<div class="modal-footer">
+																						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<!-- /modals -->
 																	</div>
 																</div>
 																<input type="text" id="measid" name="measid" class="invisible form-control col-md-7 col-xs-12">
@@ -549,6 +579,52 @@
 		});
 	}
 
+	function validateNIC(nic, color) {
+		console.log(nic, color);
+		// Remove any spaces or dashes from the NIC number
+		nic = nic.replace(/[\s-]/g, '');
+
+		// Check if the NIC number has 9 digits and ends with 'V' or 'X'
+		if (/^\d{9}[VXvx]$/i.test(nic)) {
+			return true;
+		}
+
+		// Check if the NIC number has 12 digits
+		if (/^\d{12}$/.test(nic)) {
+			return true;
+		}
+
+		// If neither of the above conditions is true, the NIC number is invalid
+		new PNotify({
+			title: 'NIC Error',
+			text: "NIC should have 9 digits and end with V or X, or 12 digits without any letters",
+			type: color,
+			styling: 'bootstrap3',
+			delay: 3000
+		});
+		// alert('NIC should have 9 digits and end with V or X, or 12 digits without any letters');
+		return false;
+	}
+
+  	function validateMobileNumber(mobileNumber, color) {
+		// Remove any spaces or dashes from the mobile number
+		mobileNumber = mobileNumber.replace(/[\s-]/g, '');
+
+		// Check if the mobile number is valid
+		if (/^(0|\+94)\d{9}$/.test(mobileNumber)) {
+			return true;
+		} else {
+		new PNotify({
+			title: 'Telephone Number Error',
+			text: "Telephone Number should have 9 digits and start with 0 or +94",
+			type: color,
+			styling: 'bootstrap3',
+			delay: 3000
+		});
+		return false;
+		}
+	}
+
 	function addCustomer() {
 
 		var check = $('#customerform')[0].checkValidity();
@@ -559,6 +635,16 @@
 			var tel = $("#txttel").val();
 			var email = $("#txtemail").val();
 			var add = $("#address").val();
+
+			if (!validateNIC(nic, 'error')) {
+				$("#txtnic").focus();
+				return;
+			}
+
+			if (!validateMobileNumber(tel, 'error')) {
+				$("#txttel").focus();
+				return;
+			}
 
 			var Data = {
 				fname: fname,
@@ -777,7 +863,7 @@
 
 	}
 
-	function getMeasurement() {
+	function getMeasurementBycusId() {
 		// $("#profile-tab").tab("show");
 		// $("#profile-tab").html("Update Measurement");
 		var id = $("#cusid1").val();
@@ -787,6 +873,7 @@
 			data: {
 				'id': id
 			},
+			dataType: 'json',
 			success: function(data) {
 				if (data === null) {
 					new PNotify({
@@ -795,25 +882,70 @@
 						type: 'warning',
 						styling: 'bootstrap3'
 					});
+					return;
 				}
-				// alert(data);
+
+				var table = $('#cusmeasurementtable').DataTable();
+				$("#cusmeasurementtable tbody").empty();
+				table.destroy();
+				for (i = 0; i < data.length; i++) {
+					// alert(data);
+					var id = data[i].measId;
+					var cusid = data[i].cusid;
+					var cusname = data[i].cusName;
+					var item = data[i].item;
+					var measurement = data[i].measurement;
+					var moredetails = data[i].moreDetails;
+
+					var func_select = 'selectMeasurement(' + id + ')';
+
+					row = ' <tr>\
+						<td> ' + cusname + '  </td>\
+						<td> ' + item + '  </td>\
+						<td> ' + measurement + '  </td>\
+						<td> ' + moredetails + '  </td>\
+						<td>\
+							<a href="#" class="btn btn-info btn-xs" onclick="' + func_select + '"><i class="fa fa-pencil"></i> Select </a>\
+					</td>';
+
+					$("#cusmeasurementtable tbody").append(row);
+				}
+				$('#cusmeasurementtable').DataTable();
+			},
+		});
+	}
+
+	function selectMeasurement(id) {
+		// // Get a reference to the modal element
+		// var modal = document.querySelector('.bs-measurement');
+		// // Hide the modal by calling the hide() method
+		// modal.hide();
+		$('.bs-measurement').modal('hide');
+		$.ajax({
+      		async: false,
+			type: "POST",
+			url: '../server.php?c=MeasurementController&m=getMeasurement',
+			data: {
+				'id': id
+			},
+			dataType: 'json',
+			success: function(data) {
 				var d = data[0];
 				var id = d.measId;
-				var cusid = d.cusId;
+				var cusid = d.cusid;
 				var cusname = d.cusName;
 				var item = d.item;
 				var measurement = d.measurement;
 				var moredetails = d.moreDetails;
-
+				console.log(id, cusid, cusname, item, measurement, moredetails);
+			
 				$("#measid").val(id);
 				$("#measid1").val(id);
 				$("#cusid1").val(cusid);
-				// $("#txtlname").val(cusname);
 				$("#txtitem").val(item);
 				$("#txtmeasurement").val(measurement);
 				$("#txtmoredetails").val(moredetails);
-			},
-			dataType: 'json'
+			}
 		});
 	}
 
