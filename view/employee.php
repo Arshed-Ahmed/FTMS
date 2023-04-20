@@ -32,14 +32,14 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtnic">NIC <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="txtnic" class="form-control col-md-7 col-xs-12" name="txtnic" placeholder="123456789V" required="required" type="text">
+              <input id="txtnic" class="form-control col-md-7 col-xs-12" name="txtnic" placeholder="123456789V" required="required" type="text" onblur="validateNIC(this.value, 'warning');">
             </div>
           </div>
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txttel">Telephone <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="tel" id="txttel" name="txttel" required="required" class="form-control col-md-7 col-xs-12">
+              <input type="tel" id="txttel" name="txttel" required="required"  data-validate-length-range="8,20" onblur="validateMobileNumber(this.value, 'warning');" class="form-control col-md-7 col-xs-12">
             </div>
           </div>
           <div class="item form-group">
@@ -202,6 +202,52 @@
     });
   }
 
+  function validateNIC(nic, color) {
+    console.log(nic, color);
+    // Remove any spaces or dashes from the NIC number
+    nic = nic.replace(/[\s-]/g, '');
+
+    // Check if the NIC number has 9 digits and ends with 'V' or 'X'
+    if (/^\d{9}[VXvx]$/i.test(nic)) {
+      return true;
+    }
+
+    // Check if the NIC number has 12 digits
+    if (/^\d{12}$/.test(nic)) {
+      return true;
+    }
+
+    // If neither of the above conditions is true, the NIC number is invalid
+    new PNotify({
+      title: 'NIC Error',
+      text: "NIC should have 9 digits and end with V or X, or 12 digits without any letters",
+      type: color,
+      styling: 'bootstrap3',
+      delay: 3000
+    });
+    // alert('NIC should have 9 digits and end with V or X, or 12 digits without any letters');
+    return false;
+  }
+
+  function validateMobileNumber(mobileNumber, color) {
+    // Remove any spaces or dashes from the mobile number
+    mobileNumber = mobileNumber.replace(/[\s-]/g, '');
+
+    // Check if the mobile number is valid
+    if (/^(0|\+94)\d{9}$/.test(mobileNumber)) {
+      return true;
+    } else {
+      new PNotify({
+        title: 'Telephone Number Error',
+        text: "Telephone Number should have 9 digits and start with 0 or +94",
+        type: color,
+        styling: 'bootstrap3',
+        delay: 3000
+      });
+      return false;
+    }
+  }
+
   function addEmployee() {
     var check = $('form')[0].checkValidity();
     if (check == true) {
@@ -215,6 +261,16 @@
       var startdate = $("#txtsdate").val();
       var salary = $("#txtsalary").val();
       var status = $("#empstat").find('option:selected').val();
+
+      if (!validateNIC(nic, 'error')) {
+        $("#txtnic").focus();
+        return;
+      }
+
+      if (!validateMobileNumber(Pno, 'error')) {
+        $("#txttel").focus();
+        return;
+      }
 
       var empData = {
         fname: fname,
@@ -360,6 +416,16 @@
       var salary = $("#txtsalary").val();
       var category = $("#empcat").find('option:selected').val();
       var status = $("#empstat").find('option:selected').val();
+
+      if (!validateNIC(nic, 'error')) {
+        $("#txtnic").focus();
+        return;
+      }
+
+      if (!validateMobileNumber(Pno, 'error')) {
+        $("#txttel").focus();
+        return;
+      }
 
       var empData = {
         id: id,
