@@ -33,5 +33,4 @@
 	        $('#title').text('New Order');
 	        $('#breadcrumb').text('Create Readymade Order');
 	    });
-	    
 	</script>
