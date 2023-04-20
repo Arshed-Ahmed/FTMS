@@ -39,7 +39,7 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txttel">Telephone <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="tel" id="txttel" name="txttel" required="required" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                    <input type="tel" id="txttel" name="txttel" required="required" data-validate-length-range="8,20" onblur="validateMobileNumber(this.value, 'warning');" class="form-control col-md-7 col-xs-12">
                   </div>
                 </div>
                 <div class="item form-group">
@@ -150,6 +150,25 @@
     });  
   }
 
+  function validateMobileNumber(mobileNumber, color) {
+    // Remove any spaces or dashes from the mobile number
+    mobileNumber = mobileNumber.replace(/[\s-]/g, '');
+
+    // Check if the mobile number is valid
+    if (/^(0|\+94)\d{9}$/.test(mobileNumber)) {
+      return true;
+    } else {
+      new PNotify({
+        title: 'Telephone Number Error',
+        text: "Telephone Number should have 9 digits and start with 0 or +94",
+        type: color,
+        styling: 'bootstrap3',
+        delay: 3000
+      });
+      return false;
+    }
+  }
+
   function addSupplier(){
 
     var check = $('form')[0].checkValidity();
@@ -160,6 +179,11 @@
       var Pno =$("#txttel").val();
       var email =$("#txtemail").val();
       var address =$("#txtaddress").val();
+
+      if (!validateMobileNumber(Pno, 'error')) {
+        $("#txttel").focus();
+        return;
+      }
 
       var empData={name:name,mname:mname,regno:regno,Pno:Pno,email:email,address:address};
 
@@ -280,6 +304,11 @@
       var Pno =$("#txttel").val();
       var email =$("#txtemail").val();
       var address =$("#txtaddress").val();
+
+      if (!validateMobileNumber(Pno, 'error')) {
+        $("#txttel").focus();
+        return;
+      }
 
       var empData=
       {id:id,name:name,mname:mname,regno:regno,Pno:Pno,email:email,address:address};
