@@ -42,6 +42,17 @@ class MaterialModel
         return $insertId;
     }
 
+    function updateMaterialQuantity($quan,$id) {
+        $query = "UPDATE $this->table SET Quantity = ? WHERE rid = ?";
+        $paramType = "si";
+        $paramValue = array(
+            $quan,
+            $id
+        );
+
+        $insertId = $this->db_handle->update($query, $paramType, $paramValue);
+        return $insertId;
+    }
     function editMaterialQuantity($quan,$id) {
         $query = "UPDATE $this->table SET Quantity = ? WHERE rid = ?";
         $paramType = "si";

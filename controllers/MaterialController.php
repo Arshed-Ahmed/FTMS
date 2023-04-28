@@ -49,6 +49,15 @@ class MaterialController
 		echo json_encode($insertId);
 	}
 
+	function updateMaterialQuantity(){
+		$id =$_POST['id'];
+        $quan = $_POST['quan'];
+
+		$model = new MaterialModel();
+		$insertId = $model->updateMaterialQuantity($quan,$id);
+		echo json_encode($insertId);
+	}
+
 	function editMaterialQuantity(){
 		$id =$_POST['id'];
         $quan = $_POST['quan'];
