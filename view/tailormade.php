@@ -381,24 +381,68 @@
 																	</label>
 																	<div class="col-md-6 col-sm-6 col-xs-12">
 																		<textarea id="txtmeasurement" required="required" name="txtmeasurement" class="form-control col-md-7 col-xs-12" rows="4"></textarea>
-																		<button id="selectMeasurement" name="selectMeasurement" type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-measurement" onclick="getMeasurementBycusId();">Add Old Measurement</button>
-																		<!-- Measurement large modal -->
-																		<div class="modal fade bs-measurement" tabindex="-1" role="dialog" aria-hidden="true">
+																	</div>
+																	<button id="selectMeasurement" name="selectMeasurement" type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-measurement" onclick="getMeasurementBycusId();">Add Old Measurement</button>
+																	<!-- Measurement large modal -->
+																	<div class="modal fade bs-measurement" tabindex="-1" role="dialog" aria-hidden="true">
+																		<div class="modal-dialog modal-lg">
+																			<div class="modal-content">
+																				<div class="modal-header">
+																					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+																					</button>
+																					<h4 class="modal-title" id="myModalLabel1">Select a measurements</h4>
+																				</div>
+																				<div class="modal-body">
+																					<table id="cusmeasurementtable" class="table table-bordered">
+																						<thead>
+																							<tr>
+																								<th>Customer Name</th>
+																								<th>Item</th>
+																								<th>Measurements</th>
+																								<th>More details</th>
+																								<th>Option</th>
+																							</tr>
+																						</thead>
+																						<tbody></tbody>
+																					</table>
+																				</div>
+																				<div class="modal-footer">
+																					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- /modals -->
+																</div>
+																<input type="text" id="measid" name="measid" class="invisible form-control col-md-7 col-xs-12">
+																<div class="item form-group">
+																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="rawMaterials ">Inhouse Raw Material</label>
+																	<div class="col-md-1 col-sm-1 col-xs-1">
+																		<input type="checkbox" id="isRaw" name="isRaw" value="true" onChange="handleRaw();">
+																	</div>
+																	<div class="col-md-5 col-sm-5 col-xs-5" id="rawMaterialsDiv" >
+																		<!-- <input type="text" list="itemname" id="rawMaterials" class="form-control col-md-7 col-xs-12" name="rawMaterials" required="required"> -->
+																		
+																	</div>
+																	<button id="selectRawMaterial" style="display:none" name="selectRawMaterial" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-raw" onclick="getAllMaterials();">Select Material</button>
+																	<!-- Raw Material large modal -->
+																		<div class="modal fade bs-raw" tabindex="-1" role="dialog" aria-hidden="true">
 																			<div class="modal-dialog modal-lg">
 																				<div class="modal-content">
 																					<div class="modal-header">
 																						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 																						</button>
-																						<h4 class="modal-title" id="myModalLabel1">Select a measurements</h4>
+																						<h4 class="modal-title" id="myModalLabel1">Select a Raw Material</h4>
 																					</div>
 																					<div class="modal-body">
-																						<table id="cusmeasurementtable" class="table table-bordered">
+																						<table id="materialtable" class="table table-bordered">
 																							<thead>
 																								<tr>
-																									<th>Customer Name</th>
-																									<th>Item</th>
-																									<th>Measurements</th>
-																									<th>More details</th>
+																									<th>Name</th>
+																									<th>Type</th>
+																									<th>Color</th>
+																									<th>Quantity</th>
+																									<th>Description</th>
 																									<th>Option</th>
 																								</tr>
 																							</thead>
@@ -412,9 +456,7 @@
 																			</div>
 																		</div>
 																		<!-- /modals -->
-																	</div>
 																</div>
-																<input type="text" id="measid" name="measid" class="invisible form-control col-md-7 col-xs-12">
 																<div class="item form-group">
 																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtmoredetails">More Details </label>
 																	<div class="col-md-6 col-sm-6 col-xs-12">
@@ -709,7 +751,7 @@
 					$("#txtlname1").val(lname);
 
 					new PNotify({
-						title: 'New Customer',
+						title: 'Customer Selected',
 						text: fname + " " + lname + " selected Susscessfully",
 						type: 'success',
 						styling: 'bootstrap3'
@@ -861,6 +903,143 @@
 			alert("not working");
 		}
 
+	}
+
+	function handleRaw() {
+		var rawMaterialsDiv = document.getElementById("selectRawMaterial");
+		var isRawCheckbox = document.getElementById("isRaw");
+		if (isRawCheckbox.checked == true){
+			rawMaterialsDiv.style.display = "block";
+		} else {
+			rawMaterialsDiv.style.display = "none";
+		}
+	}
+
+	function getAllMaterials() {
+		$.ajax({  
+		url: '../server.php?c=MaterialController&m=getAllMaterial',
+		type: "POST",  
+		dataType: "json",  
+		success: function (data) {  
+			// alert(JSON.stringify(data));
+			var table = $('#materialtable').DataTable();
+			$("#materialtable tbody").empty();
+			table.destroy();
+			for (i = 0; i < data.length; i++) {
+
+			var id = data[i].rid;
+			var name = data[i].Name;
+			var type = data[i].Type;
+			var col = data[i].Color;
+			var quan = data[i].Quantity;
+			var desc = data[i].Description;
+
+			var func_select = 'getMaterial(' + id + ')';
+
+			row = 
+			' <tr>\
+				<td> '+name+' </td>\
+				<td> '+type+' </td>\
+				<td> '+col+' </td>\
+				<td> '+quan+' m </td>\
+				<td> '+desc+' </td>\
+				<td>\
+					<a href="#" class="btn btn-warning btn-xs" onclick="'+func_select+'"><i class="fa fa-shopping-cart"></i> Select </a>\
+				</td>';
+
+			$("#materialtable tbody").append(row);
+			}
+			$('#materialtable').DataTable();
+		}
+		});  
+	}
+
+	function getMaterial(id){
+		$.ajax({
+			type: "POST",
+			url: '../server.php?c=MaterialController&m=getMaterial',
+			data: {'id':id},
+			success: function(data){
+				var d=data[0]; 
+				var id = d.rid;
+				var name = d.Name;
+				var type = d.Type;
+				var col = d.Color;
+				var quan = d.Quantity;
+				var desc = d.Description;
+
+				let idStrng = id.toString().padStart(3, '0');
+
+				var quatWant = prompt('Please enter required quantity, Only '+quan+' m available');
+				
+				var func_close = 'rawClose(' + id + ',' + quan + ')';
+
+				if (quatWant > quan){
+					alert('Only '+quan+' m available');
+				} else {
+					$('.bs-raw').modal('hide');
+					var card = '<div class="card" style="color:black; position:relative; border:1px solid blue; background-color:lightblue; padding: 10px">\
+						<button style="position:absolute; top:-10px; right:-15px;padding: 0; border-radius:70%; font-size:18px;" onclick='+ func_close +'>\
+							<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>\
+						</button>\
+						<div class="card-body">\
+							<p class="card-title" style="font-weight:700">' + name + ' - Id: ' + idStrng + '</p>\
+							<p class="card-text">Color: ' + col + '</p>\
+							<p class="card-text">' + desc + '</p>\
+							<p class="card-text">' + quatWant + 'm from ' + quan + 'm</p>\
+						</div>\
+					</div>';
+					$("#rawMaterialsDiv").html(card);
+					console.log('Prompt Val', quatWant);
+
+					//Update raw material quantity
+					var newQuan = quan - quatWant;
+					$.ajax({
+						type: "POST",
+						url: '../server.php?c=MaterialController&m=updateMaterialQuantity',
+						data: {
+							'id': id,
+							'quan': newQuan
+						},
+						success: function(data){
+							console.log('Raw Material Quantity Updated');
+							new PNotify({
+								title: 'Using Material',
+								text: "Raw Material Quantity Updated",
+								type: 'success',
+								styling: 'bootstrap3'
+							});
+						}
+					});
+				}
+			},
+			dataType: 'json'
+		});
+		
+	} 
+
+	function rawClose(id, quan) {
+		let result = window.confirm("Are you sure you want to delete this material?");
+		if (result) {
+			// upodating raw material quantity
+			$.ajax({
+				type: "POST",
+				url: '../server.php?c=MaterialController&m=updateMaterialQuantity',
+				data: {
+					'id': id,
+					'quan': quan
+				},
+				success: function(data){
+					console.log('Raw Material Quantity Updated');
+					new PNotify({
+						title: 'Deleting Selected Material',
+						text: "Raw Material Quantity Updated",
+						type: 'success',
+						styling: 'bootstrap3'
+					});
+				}
+			});
+		}
 	}
 
 	function getMeasurementBycusId() {
