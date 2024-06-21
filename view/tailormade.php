@@ -373,6 +373,13 @@
 																		</datalist>
 																	</div>
 																</div>
+																<div class="item form-group">
+																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtitem ">No of Item <span class="required">*</span>
+																	</label>
+																	<div class="col-md-6 col-sm-6 col-xs-12">
+																		<input defautvalue='1' type="number" id="no_of_item" class="form-control col-md-7 col-xs-12" name="no_of_item" required="required" onChange="checkQuantity();">
+																	</div>
+																</div>
 																<div class="col-lg-12">
 																	<span class="section"></span>
 																</div>
@@ -417,8 +424,9 @@
 																<input type="text" id="measid" name="measid" class="invisible form-control col-md-7 col-xs-12">
 																<div class="item form-group">
 																	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="rawMaterials ">Inhouse Raw Material</label>
+																	<label class="control-label col-md-3 col-sm-3 col-xs-12" id="notice" name="notice" style="color:red; display: none" >There are not enough material for this in-house.</label>
 																	<div class="col-md-1 col-sm-1 col-xs-1">
-																		<input type="checkbox" id="isRaw" name="isRaw" value="true" onChange="handleRaw();">
+																		<input id="isRaw" name="isRaw" type="checkbox" value="true" onChange="handleRaw();">
 																	</div>
 																	<div class="col-md-5 col-sm-5 col-xs-5" id="rawMaterialsDiv" >
 																		<!-- <input type="text" list="itemname" id="rawMaterials" class="form-control col-md-7 col-xs-12" name="rawMaterials" required="required"> -->
@@ -1017,6 +1025,175 @@
 		});
 		
 	} 
+
+	function getQuantity(){
+		var totalQuatity = 0;
+
+		$.ajax({  
+      		async: false,
+			url: '../server.php?c=MaterialController&m=getAllMaterial',
+			type: "POST",  
+			dataType: "json",  
+			success: function (data) {  
+				// alert(JSON.stringify(data));
+				var table = $('#materialtable').DataTable();
+				$("#materialtable tbody").empty();
+				table.destroy();
+				for (i = 0; i < data.length; i++) {
+
+					var id = data[i].rid;
+					var name = data[i].Name;
+					var type = data[i].Type;
+					var col = data[i].Color;
+					var quan = data[i].Quantity;
+					var desc = data[i].Description;
+
+					totalQuatity = (+quan) + (+totalQuatity);
+				}
+			}
+		});
+		return totalQuatity;
+	}
+
+	function valdQua(no_of_item, item){
+		if(no_of_item < 1){
+			new PNotify({
+				title: 'Please input a valid quantity',
+				text: "Item quantity",
+				type: 'warning',
+				styling: 'bootstrap3'
+			});
+			return false;
+		}
+
+		if(item == '' || item == null){
+			new PNotify({
+				title: 'Please select an item',
+				text: "Item",
+				type: 'warning',
+				styling: 'bootstrap3'
+			});
+			return false;
+		}
+		return true;
+	}
+
+
+
+	function checkQuantity() {
+		var item = $("#txtitem").val();
+		var no_of_item = $("#no_of_item").val();
+
+		if(no_of_item < 1){
+			new PNotify({
+				title: 'Please input a valid quantity',
+				text: "Item quantity",
+				type: 'warning',
+				styling: 'bootstrap3'
+			});
+			return;
+		}
+
+		if(item == '' || item == null){
+			new PNotify({
+				title: 'Please select an item',
+				text: "Item",
+				type: 'warning',
+				styling: 'bootstrap3'
+			});
+			return;
+		}
+
+		var totalQuatity = getQuantity();
+
+		console.log(totalQuatity);
+
+		var shirt = 2.75*(+no_of_item);
+		var tShirt = 10*(+no_of_item);
+		var trousers = 4*(+no_of_item);
+		var blazer = 12*(+no_of_item);
+		var frocks = 11*(+no_of_item);
+		var uniformsM = 6*(+no_of_item);
+		var uniformsF = 15*(+no_of_item);
+
+		var isRawCheckbox = document.getElementById("isRaw");
+		var notice = document.getElementById("notice");
+
+		if (item == "Shirt" ){
+			if(shirt > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}
+		else if (item == "t-Shirt" ){
+			if(tShirt > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}
+		else if (item == "Trousers" ){
+			if(trousers > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}
+		else if (item == "Blazer" ){
+			if(blazer > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}
+		else if (item == "Frocks" ){
+			if(frocks > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}
+		else if (item == "Uniforms (Male)" ){
+			if(uniformsM > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}
+		else if (item == "Uniforms (Female)" ){
+			if(uniformsF > totalQuatity){
+				notice.style.display = 'block';
+				isRawCheckbox.style.display = 'none';
+			}else{
+				notice.style.display = 'none';
+				isRawCheckbox.style.display = 'block';
+			}
+		}else{
+			new PNotify({
+				title: 'Please select from the list',
+				text: "Item",
+				type: 'warning',
+				styling: 'bootstrap3'
+			});
+			return;
+		}
+
+
+		
+	}
 
 	function rawClose(id, quan) {
 		let result = window.confirm("Are you sure you want to delete this material?");
